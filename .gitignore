@@ -28,3 +28,4 @@ nohup.out
 *.log
 core*
 *.cmake
+bin
