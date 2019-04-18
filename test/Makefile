@@ -75,5 +75,5 @@ all: ${all_objs}
 
 clean:
 	rm -rf ${all_objs}
-	rm -rf *.test *.o *.dSYM
+	rm -rf *.test *.o *.dSYM ./bin
 	rm -rf core*
