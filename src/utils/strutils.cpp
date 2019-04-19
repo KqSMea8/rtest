@@ -10,7 +10,7 @@
 #include "strutils.h"
 
 using namespace std;
-namespace cpputils{
+namespace runtofuServer{
 #define ENCODE64(c)     (((c) & 0xC0) ? -1 : base64digits[(int)c])
 #define DECODE64(c)     (((c) & 0x80) ? -1 : base64val[(int)c])
     unsigned char StrUtils::hexchars[] = "0123456789ABCDEF";

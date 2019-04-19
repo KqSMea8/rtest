@@ -90,10 +90,10 @@ void printVector(const std::vector <string> &output){
 
 
 int main(){
-    cpputils::TerminalTable table;
+    runtofuServer::TerminalTable table;
     table.addHeadData(3, "shop_id", "shop_name", "desc");
 
-    cpputils::RegExp rg("\\|");
+    runtofuServer::RegExp rg("\\|");
 
     size_t tlen = sizeof(testForTable) / sizeof(char *);
     int i;
@@ -105,9 +105,9 @@ int main(){
     }
 
     //设置各种颜色
-    //table.setBorderColorType(cpputils::Color::COLOR_RED);
-    //table.setRowFontColorType(cpputils::Color::COLOR_GREEN);
-    //table.setHeaderFontColorType(cpputils::Color::COLOR_BROWN);
+    //table.setBorderColorType(runtofuServer::Color::COLOR_RED);
+    //table.setRowFontColorType(runtofuServer::Color::COLOR_GREEN);
+    //table.setHeaderFontColorType(runtofuServer::Color::COLOR_BROWN);
 
     string output;
     table.renderToString(output);

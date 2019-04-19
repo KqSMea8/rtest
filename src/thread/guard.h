@@ -1,13 +1,20 @@
 /*************************************************************************
- * File:	httpServer.cpp
+ * File:	guard.h
  * Author:	liuyongshuai<liuyongshuai@hotmail.com>
- * Time:	2019-04-04 14:37
+ * Time:	2019-04-19 19:43
  ************************************************************************/
-#include<iostream>
-#include "httpServer.h"
+#ifndef _RUNTOFUSERVER_GUARD_H_201904191943_
+#define _RUNTOFUSERVER_GUARD_H_201904191943_
 
-using namespace std;
+#include<string>
+#include<vector>
+#include<map>
 
 namespace runtofuServer{
+    class guard{
 
+    };
 } //namespace runtofuServer
+
+
+#endif //_RUNTOFUSERVER_GUARD_H_201904191943_

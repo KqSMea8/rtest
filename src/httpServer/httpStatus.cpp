@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace cpputils{
+namespace runtofuServer{
     map <uint32_t, string> httpStatus::statusMap;
 
     //获取各状态的描述信息
@@ -65,4 +65,4 @@ namespace cpputils{
             desc = iter->second;
         }
     }
-} //namespace cpputils
+} //namespace runtofuServer

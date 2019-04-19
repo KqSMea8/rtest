@@ -13,7 +13,7 @@
 
 using namespace std;
 
-namespace cpputils{
+namespace runtofuServer{
     class SomeUtils{
     private:
         static const char *urandomDevice;

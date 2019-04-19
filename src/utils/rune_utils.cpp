@@ -15,7 +15,7 @@
 
 using namespace std;
 
-namespace cpputils{
+namespace runtofuServer{
 #define TABLE_LEN(a) ( (sizeof(a)) / (sizeof(a[0])) )
 
     int RuneUtils::isRuneInTable(int32_t rune, runeInterval *table, size_t tableLen){

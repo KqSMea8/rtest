@@ -18,7 +18,7 @@
 #include <memory.h>
 #include "curl_handle.h"
 
-namespace cpputils {
+namespace runtofuServer {
     class HttpClientMulti {
 
     };

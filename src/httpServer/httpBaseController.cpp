@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace cpputils{
+namespace runtofuServer{
     httpBaseController::httpBaseController(const httpRequest &r):req(r),rsp(NULL),dict(NULL){
 		rsp = new httpResponse(r);
 		string dictName = this->tplName;
@@ -45,4 +45,4 @@ namespace cpputils{
 		free(rsp);
 		free(dict);
 	}
-} //namespace cpputils
+} //namespace runtofuServer

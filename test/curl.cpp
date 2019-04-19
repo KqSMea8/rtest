@@ -133,7 +133,7 @@ void printMapStringString(map <string, string> &m) {
 }
 
 int main() {
-    cpputils::curlHandle curlFP;
+    runtofuServer::curlHandle curlFP;
     curlFP.setUrl(strUrl);
     curlFP.setDebug(true);
     curlFP.addFile("firstFile", "/Users/liuyongshuai/Documents/service.conf", "filename");
@@ -144,21 +144,21 @@ int main() {
     curlFP.addHeader("Host", "test.wendao.com");
 
     cout << "---------POST---------" << endl;
-    cpputils::HttpResponse post;
-    cpputils::HttpClientUtils::Post(curlFP, post);
+    runtofuServer::HttpResponse post;
+    runtofuServer::HttpClientUtils::Post(curlFP, post);
     cout << post.rspStr << endl;
     post.printHeaders();
 
     cout << "---------PostRaw---------" << endl;
     string rawStr = "asfdadfasdfadfdas";
-    cpputils::HttpResponse postRaw;
-    cpputils::HttpClientUtils::PostRaw(curlFP, rawStr, postRaw);
+    runtofuServer::HttpResponse postRaw;
+    runtofuServer::HttpClientUtils::PostRaw(curlFP, rawStr, postRaw);
     cout << postRaw.rspStr << endl;
     postRaw.printHeaders();
 
     cout << "---------Get---------" << endl;
-    cpputils::HttpResponse get;
-    cpputils::HttpClientUtils::Get(curlFP, get);
+    runtofuServer::HttpResponse get;
+    runtofuServer::HttpClientUtils::Get(curlFP, get);
     cout << get.rspStr << endl;
     get.printHeaders();
 }

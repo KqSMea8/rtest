@@ -14,7 +14,7 @@
 
 using namespace std;
 
-namespace cpputils{
+namespace runtofuServer{
     //整个表格
     class TerminalTable{
 

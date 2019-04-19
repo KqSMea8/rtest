@@ -8,7 +8,7 @@
 #include "mysql_client.h"
 using namespace std;
 
-namespace cpputils{
+namespace runtofuServer{
 
 
 

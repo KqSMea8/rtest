@@ -18,7 +18,7 @@
 #include <memory.h>
 
 using namespace std;
-namespace cpputils{
+namespace runtofuServer{
     class HttpResponse{
     public:
         string rspStr;

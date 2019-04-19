@@ -47,7 +47,7 @@ int main() {
                      "</div>";
 
     string pattern = "<div(.*?)>";
-    cpputils::RegExp regExp(pattern);
+    runtofuServer::RegExp regExp(pattern);
     std::string splitNewStr55;
     regExp.reg_replace_callback(htmlStr,  splitNewStr55,fn);
 	cout << splitNewStr55 << endl;

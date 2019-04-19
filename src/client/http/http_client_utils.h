@@ -15,7 +15,7 @@
 #include "curl_handle.h"
 
 using namespace std;
-namespace cpputils{
+namespace runtofuServer{
     class HttpClientUtils{
     protected:
         static map <string, string> commonHeader;

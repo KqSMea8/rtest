@@ -14,7 +14,7 @@
 #include "httpResponse.h"
 #include "httpStatus.h"
 
-namespace cpputils{
+namespace runtofuServer{
     class httpBaseController{
     private:
         typedef enum{
@@ -48,7 +48,7 @@ namespace cpputils{
 
         virtual void execute(std::string &output) final;
     };
-} //namespace cpputils
+} //namespace runtofuServer
 
 
 #endif //_CPPUTILS_HTTPBASECONTROLLER_H_201904162006_

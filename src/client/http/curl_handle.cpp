@@ -20,7 +20,7 @@
 
 using namespace std;
 
-namespace cpputils{
+namespace runtofuServer{
     static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
     static bool isInitGlobalCurl = false;
 

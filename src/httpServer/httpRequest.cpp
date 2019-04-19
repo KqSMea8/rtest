@@ -15,7 +15,7 @@
 
 using namespace std;
 
-namespace cpputils{
+namespace runtofuServer{
     httpRequest::httpRequest(const void *body, size_t len){
         this->init(body, len);
     }
@@ -371,4 +371,4 @@ namespace cpputils{
             cout << "fileName=" << fileIter->second.fileName << "\tfileLen=" << fileIter->second.fileLen << endl;
         }
     }
-} //namespace cpputils
+} //namespace runtofuServer

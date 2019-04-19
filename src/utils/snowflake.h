@@ -30,7 +30,7 @@
 
 using namespace std;
 
-namespace cpputils{
+namespace runtofuServer{
     class SnowFlake{
     public:
         void setWorkerId(int64_t workerId);

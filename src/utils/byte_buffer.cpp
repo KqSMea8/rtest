@@ -11,7 +11,7 @@
 
 using namespace std;
 
-namespace cpputils{
+namespace runtofuServer{
     ByteBuffer::ByteBuffer(){
         curPos = 0;
         totalCapacity = 0;

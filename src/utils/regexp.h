@@ -14,7 +14,7 @@
 #include<string>
 #include<pcre.h>
 
-namespace cpputils{
+namespace runtofuServer{
 #define PCRE_OVECCOUNT 128
 
     class RegExp{

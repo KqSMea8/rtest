@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-namespace cpputils {
+namespace runtofuServer {
     class MD5 {
     private:
 

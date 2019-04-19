@@ -52,16 +52,16 @@ int main(){
     printVector(matchs1);
     cout << (matchs[0] == rawStr1) << endl;
 
-    cpputils::RegExp regExp(pattern);
-    std::vector <std::vector< cpputils::RegExp::RegSubMatch > > output1;
+    runtofuServer::RegExp regExp(pattern);
+    std::vector <std::vector< runtofuServer::RegExp::RegSubMatch > > output1;
     regExp.reg_match_general(rawStr, -1, output1);
     cout << output1.size() << endl;
     cout << "reg_match_general" << endl;
-    std::vector < std::vector < cpputils::RegExp::RegSubMatch > > ::const_iterator
+    std::vector < std::vector < runtofuServer::RegExp::RegSubMatch > > ::const_iterator
     iter21;
     for (iter21 = output1.begin(); iter21 != output1.end(); iter21++){
         cout << iter21->size() << endl;
-        std::vector< cpputils::RegExp::RegSubMatch >::const_iterator iter22;
+        std::vector< runtofuServer::RegExp::RegSubMatch >::const_iterator iter22;
         for (iter22 = iter21->begin(); iter22 != iter21->end(); iter22++){
             cerr << "substr=\n\t" << iter22->sub_str << endl;
             cout << "start_pos=\n\t" << iter22->start_pos << endl;
@@ -81,21 +81,21 @@ int main(){
 
     cout << "reg_split" << endl;
     string splitStr = "Showing 11 changed files  with 246 additions and 148 deletions";
-    cpputils::RegExp regExp1("\\s+");
+    runtofuServer::RegExp regExp1("\\s+");
     std::vector <std::string> splitList;
     regExp1.reg_split(splitStr, splitList);
     printVector(splitList);
 
     cout << "reg_split_1" << endl;
     string splitStr2 = "${2}abc\\${2}";
-    cpputils::RegExp regExp22("(?<!\\)$\\{[\\d]\\}");
+    runtofuServer::RegExp regExp22("(?<!\\)$\\{[\\d]\\}");
     std::vector <std::string> splitList2;
     regExp22.reg_split(splitStr2, splitList2);
     printVector(splitList2);
 
     cout << "reg_match" << endl;
     string matchStr = "2019-03-29 12:34:22";
-    cpputils::RegExp regExp2("^[\\d]{4}-[\\d]+-[\\d]{2}.*$");
+    runtofuServer::RegExp regExp2("^[\\d]{4}-[\\d]+-[\\d]{2}.*$");
     int matchRet = regExp2.reg_match(matchStr);
     cout << "matchRet=" << matchRet << endl;
 
@@ -105,7 +105,7 @@ int main(){
 
     cout << "reg_replace" << endl;
     string splitStr44 = "Showing 11 changed files  with 246 additions and 148 deletions";
-    cpputils::RegExp regExp44("(\\s+an[a-z]*?)\\s");
+    runtofuServer::RegExp regExp44("(\\s+an[a-z]*?)\\s");
     std::string splitNewStr44;
     regExp44.reg_replace(splitStr44, "${1}aa${1}", splitNewStr44);
     cout << splitNewStr44 << endl << endl;
@@ -120,7 +120,7 @@ int main(){
     cout << "simple regexp check........" << endl;
     string locale = "zh_CN.utf8";
     string localePattern = "^[a-z][a-z][a-z]?(?:_[A-Z][A-Z])?\\.(.+)";
-    cpputils::RegExp regExp99(localePattern);
+    runtofuServer::RegExp regExp99(localePattern);
     std::vector <std::vector< std::string > > matchAll99;
     regExp99.reg_match_all(locale,matchAll99);
     for (iter31 = matchAll99.begin(); iter31 != matchAll99.end(); iter31++){

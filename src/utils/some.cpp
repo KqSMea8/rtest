@@ -24,7 +24,7 @@
 
 using namespace std;
 
-namespace cpputils{
+namespace runtofuServer{
     const char *SomeUtils::urandomDevice = "/dev/urandom";
 
     //获取屏幕终端的宽高

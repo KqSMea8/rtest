@@ -1,20 +1,20 @@
 /*************************************************************************
- * File:	httpServer.h
+ * File:	Thread.h
  * Author:	liuyongshuai<liuyongshuai@hotmail.com>
- * Time:	2019-04-04 14:37
+ * Time:	2019-04-19 19:43
  ************************************************************************/
-#ifndef _CPPUTILS_HTTPSERVER_H_201904041437_
-#define _CPPUTILS_HTTPSERVER_H_201904041437_
+#ifndef _RUNTOFUSERVER_THREAD_H_201904191943_
+#define _RUNTOFUSERVER_THREAD_H_201904191943_
 
 #include<string>
 #include<vector>
 #include<map>
 
 namespace runtofuServer{
-    class httpServer{
+    class Thread{
 
     };
 } //namespace runtofuServer
 
 
-#endif //_CPPUTILS_HTTPSERVER_H_201904041437_
+#endif //_RUNTOFUSERVER_THREAD_H_201904191943_
