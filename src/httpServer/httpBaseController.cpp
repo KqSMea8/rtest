@@ -9,5 +9,20 @@
 using namespace std;
 
 namespace cpputils{
+    httpBaseController::httpBaseController(httpRequest &r) : req(r){
 
+    }
+
+    void httpBaseController::beforeRun(){
+
+    }
+
+    void httpBaseController::afterRun(){
+
+    }
+
+
+    void httpBaseController::execute(string &output){
+
+    }
 } //namespace cpputils

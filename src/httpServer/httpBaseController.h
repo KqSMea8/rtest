@@ -44,6 +44,8 @@ namespace cpputils{
         virtual void run() = 0;
 
         virtual void afterRun();
+
+        void execute(std::string &output) final;
     };
 } //namespace cpputils
 
