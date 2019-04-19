@@ -55,6 +55,17 @@ namespace cpputils{
         this->headers[headerKey] = tmp;
     }
 
+    void httpResponse::getHeader(const std::string &k, vector <string> &vs){
+        string headerKey = k;
+        HttpClientUtils::canonicalHeaderKey(headerKey);
+        vector <string> tmp;
+        std::map < std::string, std::vector < std::string > > const_iterator iter;
+        if ((iter = headers.find(headerKey)) == headers.end()){
+            return;
+        }
+        vs = iter->second;
+    }
+
     //设置cookie信息
     void httpResponse::setCookie(const std::string &k, const std::string &v, uint32_t maxAgeTime, const std::string &path, const std::string &domain, bool secure, bool httponly){
         if (k.size() <= 0){

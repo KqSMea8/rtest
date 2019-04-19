@@ -38,6 +38,8 @@ namespace cpputils{
 
         void addHeader(const std::string &k, const std::string &v);
 
+        void getHeader(const std::string &k, std::vector <std::string> &vs);
+
         //设置cookie信息
         void setCookie(
                 const std::string &k,//KV是必需的
