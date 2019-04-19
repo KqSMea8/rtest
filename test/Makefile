@@ -47,11 +47,10 @@ all_objs=${utils_objs} ${client_objs} ${httpServer_objs}
 	$(CC) $(CPPFLAGS) ${INC_DIR} -c $< -o $@
 
 all: ${all_objs}
-	rm -rf ./bin; mkdir ./bin; \
 	for sf in ${bin_targets}; \
 	do \
-		binName=`echo $$sf|sed s/.cpp//g`; \
-		${CC} ${all_objs} -o ./bin/$$binName ${CPPFLAGS} $$sf ${INC_DIR}; \
+		binName=`echo $$sf|sed s/.cpp//g`_bin; \
+		${CC} ${all_objs} -o $$binName ${CPPFLAGS} $$sf ${INC_DIR}; \
 	done
 
 #在编译curl.test时，-lcurl放到了curl.cpp后面就提示“对‘curl_easy_init’未定义的引用”这样的错误，调整一下curl.cpp跟-lcurl的顺序即可！
@@ -75,5 +74,5 @@ all: ${all_objs}
 
 clean:
 	rm -rf ${all_objs}
-	rm -rf *.test *.o *.dSYM ./bin
+	rm -rf *.test *.o *.dSYM *_bin
 	rm -rf core*
