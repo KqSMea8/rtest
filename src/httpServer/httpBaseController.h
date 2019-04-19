@@ -9,6 +9,7 @@
 #include<string>
 #include<vector>
 #include<map>
+#include <ctemplate/template.h>
 #include "httpRequest.h"
 #include "httpResponse.h"
 #include "httpStatus.h"
@@ -31,6 +32,9 @@ namespace cpputils{
 
         //响应信息
         httpResponse rsp;
+
+        //赋给模板的数据字典
+        ctemplate::TemplateDictionary dict
 
     public:
         httpBaseController(httpRequest &r);
