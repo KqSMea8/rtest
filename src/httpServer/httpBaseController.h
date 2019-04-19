@@ -17,7 +17,7 @@
 namespace cpputils{
     class httpBaseController{
     private:
-        enum{
+        typedef enum{
             HTML, JSON
         } OUTPUT_TYPE;
 
@@ -28,16 +28,17 @@ namespace cpputils{
         OUTPUT_TYPE rspType;
 
         //请求信息
-        httpRequest &req;
+        const httpRequest &req;
 
         //响应信息
-        httpResponse rsp;
+        httpResponse *rsp;
 
         //赋给模板的数据字典
-        ctemplate::TemplateDictionary dict
+        ctemplate::TemplateDictionary *dict;
 
     public:
-        httpBaseController(httpRequest &r);
+        httpBaseController(const httpRequest &r);
+        ~httpBaseController();
 
         virtual void beforeRun();
 
@@ -45,7 +46,7 @@ namespace cpputils{
 
         virtual void afterRun();
 
-        void execute(std::string &output) final;
+        virtual void execute(std::string &output) final;
     };
 } //namespace cpputils
 

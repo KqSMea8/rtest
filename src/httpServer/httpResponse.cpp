@@ -59,7 +59,7 @@ namespace cpputils{
         string headerKey = k;
         HttpClientUtils::canonicalHeaderKey(headerKey);
         vector <string> tmp;
-        std::map < std::string, std::vector < std::string > > const_iterator iter;
+        std::map < std::string, std::vector < std::string > > ::const_iterator iter;
         if ((iter = headers.find(headerKey)) == headers.end()){
             return;
         }
