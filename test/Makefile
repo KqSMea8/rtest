@@ -48,6 +48,7 @@ all: ${all_objs}
 		${CC} ${all_objs} -o $$binName ${CPPFLAGS} $$sf ${INC_DIR}; \
 	done
 	rm -rf *.dSYM
+	rm -rf ${all_objs}
 
 #在编译curl.test时，-lcurl放到了curl.cpp后面就提示“对‘curl_easy_init’未定义的引用”这样的错误，调整一下curl.cpp跟-lcurl的顺序即可！
 #如果-l指定的库出现的位置在引用它的对象文件之前出现那么会出现相应的函数找不到（无法加载的问题）。所以-l的顺序是很重要的。man文档中有说明。
