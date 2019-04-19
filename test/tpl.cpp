@@ -3,14 +3,12 @@
 #include <dlfcn.h>
 #include <ctemplate/template.h>
 
-int main()
-{
+int main(){
     ctemplate::TemplateDictionary dict("example");
     dict.SetValue("table1_name", "example");
 
-    for (int i=0; i<2; ++i)
-    {
-        ctemplate::TemplateDictionary* table1_dict;
+    for (int i = 0; i < 2; ++i){
+        ctemplate::TemplateDictionary *table1_dict;
         table1_dict = dict.AddSectionDictionary("TABLE1");
         table1_dict->SetValue("field1", "1");
         table1_dict->SetValue("field2", "2");
@@ -20,7 +18,7 @@ int main()
     }
 
     std::string output;
-    ctemplate::Template* tpl;
+    ctemplate::Template *tpl;
     tpl = ctemplate::Template::GetTemplate("./data/tpl.html", ctemplate::DO_NOT_STRIP);
     tpl->Expand(&output, &dict);
     printf("%s\n", output.c_str());
