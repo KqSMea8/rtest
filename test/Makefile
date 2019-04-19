@@ -10,13 +10,8 @@ HTTPSERVER_DIR=${SRC_PATH}/httpServer
 INC_DIR=-I${UTILS_DIR} \
         -I${CLIENT_DIR} \
 		-I${HTTPSERVER_DIR} \
-        -Wl,-Bstatic -lctemplate -lz -luuid -lmysqlclient -lhiredis -lyaml-cpp -lgtest \
-        -Wl,-Bdynamic \
-        -lpcre \
-		-lcurl \
-        -lm \
-        -lpthread \
-        -Wl,--as-needed
+		-lctemplate -lz -luuid -lmysqlclient -lhiredis -lyaml-cpp -lgtest -lconfig -llog4cplus -ljsoncpp \
+        -lpcre -lcurl -lm -lpthread 
 
 
 utils_objs=${UTILS_DIR}/strutils.o \
