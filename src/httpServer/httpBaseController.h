@@ -28,7 +28,7 @@ namespace runtofuServer{
         OUTPUT_TYPE rspType;
 
         //请求信息
-        const httpRequest &req;
+        const httpRequest *req;
 
         //响应信息
         httpResponse *rsp;
@@ -37,7 +37,8 @@ namespace runtofuServer{
         ctemplate::TemplateDictionary *dict;
 
     public:
-        httpBaseController(const httpRequest &r);
+        httpBaseController(const httpRequest *r);
+
         ~httpBaseController();
 
         virtual void beforeRun();

@@ -20,7 +20,7 @@ void genCurData(uint32_t maxAgeTime, string &d){
 
 namespace runtofuServer{
     //初始化一些头信息
-    httpResponse::httpResponse(const httpRequest &req) : req(req){
+    httpResponse::httpResponse(){
         this->setHeader("Referrer-Policy", "origin-when-cross-origin");
         this->setHeader("X-Powered-By", "runtofu");
         this->setHeader("Server", "runtofu");
@@ -59,7 +59,8 @@ namespace runtofuServer{
         string headerKey = k;
         HttpClientUtils::canonicalHeaderKey(headerKey);
         vector <string> tmp;
-        std::map < std::string, std::vector < std::string > > ::const_iterator iter;
+        std::map < std::string, std::vector < std::string > > ::const_iterator
+        iter;
         if ((iter = headers.find(headerKey)) == headers.end()){
             return;
         }
@@ -125,7 +126,7 @@ namespace runtofuServer{
         string statusStr;
         httpStatus::statusDesc(this->status, statusStr);
         char r[64] = {0};
-        sprintf(r, "%s %d %s\r\n", this->req.protocol.c_str(), this->status, statusStr.c_str());
+        sprintf(r, "HTTP/1.1 %d %s\r\n", this->status, statusStr.c_str());
         h = r;
         map < string, vector < string >> ::const_iterator
         mapIter;

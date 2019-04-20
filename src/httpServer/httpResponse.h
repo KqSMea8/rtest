@@ -22,13 +22,12 @@ namespace runtofuServer{
         std::map <std::string, std::vector< std::string>> headers;
         std::string body;
         std::string rsp;
-        const httpRequest &req;
 
         //生成header信息
         void genHeader(string &h);
 
     public:
-        httpResponse(const httpRequest &req);
+        httpResponse();
 
         //设置响应值
         void setStatus(httpStatus::HTTP_STATUS status);

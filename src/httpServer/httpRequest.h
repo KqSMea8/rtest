@@ -25,13 +25,16 @@ namespace runtofuServer{
         //解析 multipart/form-data 请求的POST数据
         void parseMultiPartFormDataArgs(const char *boundary);
 
-        //初始化方法
-        int init(const void *body, size_t len);
-
         void parseArgs(const string &str);
 
     public:
-        httpRequest(const void *body, size_t len);
+        httpRequest();
+
+        //初始化方法
+        int parseBody(const void *body, size_t len);
+
+        //初始化
+        void reset();
 
         ~httpRequest();
 

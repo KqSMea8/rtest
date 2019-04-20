@@ -16,16 +16,22 @@
 using namespace std;
 
 namespace runtofuServer{
-    httpRequest::httpRequest(const void *body, size_t len){
-        this->init(body, len);
+    httpRequest::httpRequest(){
+        this->rawBody = NULL;
+        this->rawBodyLen = 0;
     }
 
     httpRequest::~httpRequest(){
 
     }
 
+    //初始化
+    void httpRequest::reset(){
+
+    }
+
     //初始化解析请求信息
-    int httpRequest::init(const void *body, size_t len){
+    int httpRequest::parseBody(const void *body, size_t len){
         cout << "initLen=" << len << endl;
         if (len == 0){
             return -1;
