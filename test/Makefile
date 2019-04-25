@@ -34,7 +34,17 @@ httpServer_objs=${HTTPSERVER_DIR}/httpRequest.o \
                 ${HTTPSERVER_DIR}/httpStatus.o \
                 ${HTTPSERVER_DIR}/httpBaseController.o
 
-bin_targets = str.cpp  regex.cpp reg_replace_callback.cpp rune.cpp table.cpp curl.cpp mysql1.cpp stream.cpp httpServe.cpp tpl.cpp
+bin_targets = str.cpp  \
+              regex.cpp \
+              reg_replace_callback.cpp \
+              rune.cpp \
+              table.cpp \
+              curl.cpp \
+              mysql1.cpp \
+              stream.cpp \
+              httpServe.cpp \
+              tpl.cpp \
+              svr.cpp
 
 all_objs=${utils_objs} ${client_objs} ${httpServer_objs}
 
