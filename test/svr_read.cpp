@@ -14,6 +14,10 @@
 #include<sys/stat.h>
 #include<sys/time.h>
 #include<sys/shm.h>
+#include <arpa/inet.h>
+#ifdef HAVE_NETINET_IN_H
+#include <netinet/in.h>
+#endif
 
 #define TEST_PORT  5000
 #define BUFFER_SIZE 1024
