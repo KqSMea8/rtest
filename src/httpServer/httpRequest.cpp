@@ -87,6 +87,7 @@ namespace runtofuServer{
         uri = tmpVec[1];
         if ((pos = uri.find_first_of("?", 0)) != string::npos){
             string argStr(uri, pos + 1);
+            uri = uri.substr(0, pos);
             this->parseArgs(argStr);
         }
         //protocol
