@@ -114,17 +114,27 @@ static void sig_pro(int signum){
 void *AcceptThread(void *arg){
     cout << "AcceptThread, enter" << endl;
 
-    int ret;        //临时变量,存放返回值
-    int epfd;        //监听用的epoll
-    int listenfd;   //监听socket
-    int connfd;        //接收到的连接socket临时变量
-    int i;            //临时变量,轮询数组用
-    int nfds;        //临时变量,有多少个socket有事件
+    //临时变量,存放返回值
+    int ret;
+    //监听用的epoll
+    int epfd;
+    //监听socket
+    int listenfd;
+    //接收到的连接socket临时变量
+    int connfd;
+    //临时变量,轮询数组用
+    int i;
+    //临时变量,有多少个socket有事件
+    int nfds;
 
-    struct epoll_event ev;                     //事件临时变量
-    const int MAXEVENTS = 1024;                //最大事件数
-    struct epoll_event events[MAXEVENTS];    //监听事件数组
-    socklen_t clilen;                         //声明epoll_event结构体的变量,ev用于注册事件,数组用于回传要处理的事件
+    //事件临时变量
+    struct epoll_event ev;
+    //最大事件数
+    const int MAXEVENTS = 1024;
+    //监听事件数组
+    struct epoll_event events[MAXEVENTS];
+    //声明epoll_event结构体的变量,ev用于注册事件,数组用于回传要处理的事件
+    socklen_t clilen;
     struct sockaddr_in cliaddr;
     struct sockaddr_in svraddr;
 
@@ -132,7 +142,8 @@ void *AcceptThread(void *arg){
     int iBacklogSize = 5;
     int iBackStoreSize = 1024;
 
-    struct pipemsg msg;                        //消息队列数据
+    //消息队列数据
+    struct pipemsg msg;
 
     //创建epoll,对2.6.8以后的版本,其参数无效,只要大于0的数值就行,内核自己动态分配
     epfd = epoll_create(iBackStoreSize);
@@ -182,15 +193,16 @@ void *AcceptThread(void *arg){
     }
 
     while (g_bRun){
-        //等待epoll事件的发生,如果当前有信号的句柄数大于输出事件数组的最大大小,超过部分会在下次epoll_wait时输出,事件不会丢
+        //等待epoll事件的发生,如果当前有信号的句柄数大于输出事件数组的最大大小,
+        //超过部分会在下次epoll_wait时输出,事件不会丢
         nfds = epoll_wait(epfd, events, MAXEVENTS, 500);
-
         //处理所发生的所有事件
         for (i = 0; i < nfds && g_bRun; ++i){
-            if (events[i].data.fd == listenfd){//是本监听socket上的事件
+            //是本监听socket上的事件
+            if (events[i].data.fd == listenfd){
                 cout << "AcceptThread, events:" << events[i].events << ",errno:" << errno << endl;
-
-                if (events[i].events & EPOLLIN){//有连接到来
+                //有连接到来
+                if (events[i].events & EPOLLIN){
                     do{
                         clilen = sizeof(struct sockaddr);
                         connfd = accept(listenfd, (sockaddr *) &cliaddr, &clilen);
@@ -211,14 +223,15 @@ void *AcceptThread(void *arg){
                         else{
                             cout << "AcceptThread, accept:" << connfd << ",errno:" << errno << endl;
 
-                            if (errno == EAGAIN){//没有连接需要接收了
+                            //没有连接需要接收了
+                            if (errno == EAGAIN){
                                 break;
                             }
-                            else if (errno == EINTR)    //可能被中断信号打断,,经过验证对非阻塞socket并未收到此错误,应该可以省掉该步判断
-                            { ;
+                                //可能被中断信号打断,,经过验证对非阻塞socket并未收到此错误,应该可以省掉该步判断
+                            else if (errno == EINTR){
                             }
-                            else{//其它情况可以认为该描述字出现错误,应该关闭后重新监听
-
+                                //其它情况可以认为该描述字出现错误,应该关闭后重新监听
+                            else{
                                 //此时说明该描述字已经出错了,需要重新创建和监听
                                 close(listenfd);
                                 epoll_ctl(epfd, EPOLL_CTL_DEL, listenfd, &ev);
@@ -227,9 +240,7 @@ void *AcceptThread(void *arg){
                                 listenfd = socket(AF_INET, SOCK_STREAM, 0);
                                 if (listenfd < 0){
                                     cout << "AcceptThread, socket fail:" << epfd << ",errno:" << errno << endl;
-
                                     close(epfd);
-
                                     return NULL;
                                 }
 
@@ -246,10 +257,8 @@ void *AcceptThread(void *arg){
                                 ret = epoll_ctl(epfd, EPOLL_CTL_ADD, listenfd, &ev);
                                 if (ret != 0){
                                     cout << "AcceptThread, epoll_ctl fail:" << ret << ",errno:" << errno << endl;
-
                                     close(listenfd);
                                     close(epfd);
-
                                     return NULL;
                                 }
 
@@ -262,18 +271,16 @@ void *AcceptThread(void *arg){
                                 ret = listen(listenfd, iBacklogSize);
                                 if (ret != 0){
                                     cout << "AcceptThread, listen fail:" << ret << ",errno:" << errno << endl;
-
                                     close(listenfd);
                                     close(epfd);
-
                                     return NULL;
                                 }
                             }
                         }
                     }while (g_bRun);
                 }
-                else if (events[i].events & EPOLLERR || events[i].events & EPOLLHUP)    //有异常发生
-                {
+                    //有异常发生s
+                else if (events[i].events & EPOLLERR || events[i].events & EPOLLHUP){
                     //此时说明该描述字已经出错了,需要重新创建和监听
                     close(listenfd);
                     epoll_ctl(epfd, EPOLL_CTL_DEL, listenfd, &ev);
@@ -282,9 +289,7 @@ void *AcceptThread(void *arg){
                     listenfd = socket(AF_INET, SOCK_STREAM, 0);
                     if (listenfd < 0){
                         cout << "AcceptThread, socket fail:" << epfd << ",errno:" << errno << endl;
-
                         close(epfd);
-
                         return NULL;
                     }
 
@@ -292,7 +297,6 @@ void *AcceptThread(void *arg){
                     setnonblocking(listenfd);
                     //设置监听socket为端口重用
                     setreuseaddr(listenfd);
-
                     //设置与要处理的事件相关的文件描述符
                     ev.data.fd = listenfd;
                     //设置要处理的事件类型
@@ -301,10 +305,8 @@ void *AcceptThread(void *arg){
                     ret = epoll_ctl(epfd, EPOLL_CTL_ADD, listenfd, &ev);
                     if (ret != 0){
                         cout << "AcceptThread, epoll_ctl fail:" << ret << ",errno:" << errno << endl;
-
                         close(listenfd);
                         close(epfd);
-
                         return NULL;
                     }
 
@@ -317,10 +319,8 @@ void *AcceptThread(void *arg){
                     ret = listen(listenfd, iBacklogSize);
                     if (ret != 0){
                         cout << "AcceptThread, listen fail:" << ret << ",errno:" << errno << endl;
-
                         close(listenfd);
                         close(epfd);
-
                         return NULL;
                     }
                 }
@@ -338,7 +338,6 @@ void *AcceptThread(void *arg){
     }
 
     cout << "AcceptThread, exit" << endl;
-
     return NULL;
 }
 
@@ -346,33 +345,46 @@ void *AcceptThread(void *arg){
 void *ReadThread(void *arg){
     cout << "ReadThread, enter" << endl;
 
-    int ret;        //临时变量,存放返回值
-    int epfd;        //连接用的epoll
-    int i;            //临时变量,轮询数组用
-    int nfds;        //临时变量,有多少个socket有事件
+    //临时变量,存放返回值
+    int ret;
+    //连接用的epoll
+    int epfd;
+    //临时变量,轮询数组用
+    int i;
+    //临时变量,有多少个socket有事件
+    int nfds;
 
-    struct epoll_event ev;                     //事件临时变量
-    const int MAXEVENTS = 1024;                //最大事件数
-    struct epoll_event events[MAXEVENTS];    //监听事件数组
+    //事件临时变量
+    struct epoll_event ev;
+    //最大事件数
+    const int MAXEVENTS = 1024;
+    //监听事件数组
+    struct epoll_event events[MAXEVENTS];
 
     int iBackStoreSize = 1024;
 
-    const int MAXBUFSIZE = 8192;                    //读数据缓冲区大小
+    //读数据缓冲区大小
+    const int MAXBUFSIZE = 8192;
     char buf[MAXBUFSIZE];
-    int nread;                                        //读到的字节数
-    struct ipport tIpPort;                            //地址端口信息
-    struct peerinfo tPeerInfo;                        //对方连接信息
-    map< int, struct ipport > mIpPort;                //socket对应的对方地址端口信息
-    map< int, struct ipport >::iterator itIpPort;                    //临时迭代子
-    map< struct ipport, struct peerinfo >::iterator itPeerInfo;    //临时迭代子
-
-    struct pipemsg msg;                        //消息队列数据
+    //读到的字节数
+    int nread;
+    //地址端口信息
+    struct ipport tIpPort;
+    //对方连接信息
+    struct peerinfo tPeerInfo;
+    //socket对应的对方地址端口信息
+    map< int, struct ipport > mIpPort;
+    //临时迭代子
+    map< int, struct ipport >::iterator itIpPort;
+    //临时迭代子
+    map< struct ipport, struct peerinfo >::iterator itPeerInfo;
+    //消息队列数据
+    struct pipemsg msg;
 
     //创建epoll,对2.6.8以后的版本,其参数无效,只要大于0的数值就行,内核自己动态分配
     epfd = epoll_create(iBackStoreSize);
     if (epfd < 0){
         cout << "ReadThread, epoll_create fail:" << epfd << ",errno:" << errno << endl;
-
         return NULL;
     }
 
@@ -383,8 +395,8 @@ void *ReadThread(void *arg){
             if (ret > 0){
                 //队列中的fd必须是有效的
                 if (ret == 14 && msg.fd > 0){
-                    if (msg.op == 1)    //收到新的连接
-                    {
+                    //收到新的连接
+                    if (msg.op == 1){
                         cout << "ReadThread, recv connect:" << msg.fd << ",errno:" << errno << endl;
 
                         //把socket设置为非阻塞方式
@@ -397,7 +409,6 @@ void *ReadThread(void *arg){
                         ret = epoll_ctl(epfd, EPOLL_CTL_ADD, msg.fd, &ev);
                         if (ret != 0){
                             cout << "ReadThread, epoll_ctl fail:" << ret << ",errno:" << errno << endl;
-
                             close(msg.fd);
                         }
                         else{
@@ -412,8 +423,8 @@ void *ReadThread(void *arg){
                             g_ConnInfo.peer[tIpPort] = tPeerInfo;
                         }
                     }
-                    else if (msg.op == 2)    //断开某个连接
-                    {
+                        //断开某个连接
+                    else if (msg.op == 2){
                         cout << "ReadThread, recv close:" << msg.fd << ",errno:" << errno << endl;
 
                         close(msg.fd);
@@ -422,7 +433,6 @@ void *ReadThread(void *arg){
                         itIpPort = mIpPort.find(msg.fd);
                         if (itIpPort != mIpPort.end()){
                             mIpPort.erase(itIpPort);
-
                             itPeerInfo = g_ConnInfo.peer.find(itIpPort->second);
                             if (itPeerInfo != g_ConnInfo.peer.end()){
                                 g_ConnInfo.peer.erase(itPeerInfo);
@@ -436,20 +446,21 @@ void *ReadThread(void *arg){
             }
         }while (g_bRun);
 
-        //等待epoll事件的发生,如果当前有信号的句柄数大于输出事件数组的最大大小,超过部分会在下次epoll_wait时输出,事件不会丢
+        //等待epoll事件的发生,如果当前有信号的句柄数大于输出事件数组的最大大小,
+        //超过部分会在下次epoll_wait时输出,事件不会丢
         nfds = epoll_wait(epfd, events, MAXEVENTS, 500);
 
         //处理所发生的所有事件
         for (i = 0; i < nfds && g_bRun; ++i){
             cout << "ReadThread, events:" << events[i].events << ",errno:" << errno << endl;
 
-            if (events[i].events & EPOLLIN)   //有数据可读
-            {
+            //有数据可读
+            if (events[i].events & EPOLLIN){
                 do{
                     bzero(buf, MAXBUFSIZE);
                     nread = read(events[i].data.fd, buf, MAXBUFSIZE);
-                    if (nread > 0)    //读到数据
-                    {
+                    //读到数据
+                    if (nread > 0){
                         cout << "ReadThread, read:" << nread << "\t" << buf << ",errno:" << errno << endl;
 
                         itIpPort = mIpPort.find(events[i].data.fd);
@@ -461,20 +472,19 @@ void *ReadThread(void *arg){
                             }
                         }
                     }
-                    else if (nread < 0) //读取失败
-                    {
-                        if (errno == EAGAIN)    //没有数据了
-                        {
+                        //读取失败
+                    else if (nread < 0){
+                        //没有数据了
+                        if (errno == EAGAIN){
                             cout << "ReadThread, read:" << nread << ",errno:" << errno << ",no data" << endl;
-
                             break;
                         }
-                        else if (errno == EINTR)        //可能被内部中断信号打断,经过验证对非阻塞socket并未收到此错误,应该可以省掉该步判断
-                        {
+                            //可能被内部中断信号打断,经过验证对非阻塞socket并未收到此错误,应该可以省掉该步判断
+                        else if (errno == EINTR){
                             cout << "ReadThread, read:" << nread << ",errno:" << errno << ",interrupt" << endl;
                         }
-                        else    //客户端主动关闭
-                        {
+                            //客户端主动关闭
+                        else{
                             cout << "ReadThread, read:" << nread << ",errno:" << errno << ",peer error" << endl;
 
                             close(events[i].data.fd);
@@ -492,8 +502,8 @@ void *ReadThread(void *arg){
                             break;
                         }
                     }
-                    else if (nread == 0) //客户端主动关闭
-                    {
+                        //客户端主动关闭
+                    else if (nread == 0){
                         cout << "ReadThread, read:" << nread << ",errno:" << errno << ",peer close" << endl;
 
                         close(events[i].data.fd);
@@ -512,8 +522,8 @@ void *ReadThread(void *arg){
                     }
                 }while (g_bRun);
             }
-            else if (events[i].events & EPOLLERR || events[i].events & EPOLLHUP)    //有异常发生
-            {
+                //有异常发生
+            else if (events[i].events & EPOLLERR || events[i].events & EPOLLHUP){
                 cout << "ReadThread, read:" << nread << ",errno:" << errno << ",err or hup" << endl;
 
                 close(events[i].data.fd);
@@ -521,7 +531,6 @@ void *ReadThread(void *arg){
                 itIpPort = mIpPort.find(events[i].data.fd);
                 if (itIpPort != mIpPort.end()){
                     mIpPort.erase(itIpPort);
-
                     itPeerInfo = g_ConnInfo.peer.find(itIpPort->second);
                     if (itPeerInfo != g_ConnInfo.peer.end()){
                         g_ConnInfo.peer.erase(itPeerInfo);
@@ -549,9 +558,12 @@ void *ReadThread(void *arg){
 
 int main(int argc, char *argv[]){
     int ret;
-    int fd[2];                    //读写管道
-    pthread_t iAcceptThreadId;    //接收连接线程ID
-    pthread_t iReadThreadId;    //读数据线程ID
+    //读写管道
+    int fd[2];
+    //接收连接线程ID
+    pthread_t iAcceptThreadId;
+    //读数据线程ID
+    pthread_t iReadThreadId;
 
     //为让应用程序不必对慢速系统调用的errno做EINTR检查,可以采取两种方式:1.屏蔽中断信号,2.处理中断信号
     //1.由signal()函数安装的信号处理程序，系统默认会自动重启动被中断的系统调用，而不是让它出错返回，
@@ -604,7 +616,8 @@ int main(int argc, char *argv[]){
     //创建线程时采用的参数
     pthread_attr_t attr;
     pthread_attr_init(&attr);
-    pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);                 //设置绑定的线程,以获取较高的响应速度
+    //设置绑定的线程,以获取较高的响应速度
+    pthread_attr_setscope(&attr, PTHREAD_SCOPE_SYSTEM);
     //pthread_attr_setdetachstate(&attr, PTHREAD_CREATE_DETACHED);        //设置分离的线程
 
     //创建接收连接线程
