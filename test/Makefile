@@ -44,7 +44,8 @@ bin_targets = str.cpp  \
               stream.cpp \
               httpServe.cpp \
               tpl.cpp \
-              svr.cpp
+              svr.cpp \
+              svr_read.cpp
 
 all_objs=${utils_objs} ${client_objs} ${httpServer_objs}
 
