@@ -450,7 +450,7 @@ void *ReadThread(void *arg){
                     nread = read(events[i].data.fd, buf, MAXBUFSIZE);
                     if (nread > 0)    //读到数据
                     {
-                        cout << "ReadThread, read:" << nread << ",errno:" << errno << endl;
+                        cout << "ReadThread, read:" << nread << "\t" << buf << ",errno:" << errno << endl;
 
                         itIpPort = mIpPort.find(events[i].data.fd);
                         if (itIpPort != mIpPort.end()){
