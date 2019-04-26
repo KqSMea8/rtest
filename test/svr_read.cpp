@@ -20,7 +20,7 @@
 #endif
 
 #define TEST_PORT  5000
-#define BUFFER_SIZE 1024
+#define BUFFER_SIZE 1024000
 
 int main(){
     int sock_cli = socket(AF_INET, SOCK_STREAM, 0);
