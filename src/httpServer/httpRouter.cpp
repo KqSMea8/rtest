@@ -6,6 +6,7 @@
 #include<iostream>
 #include "httpRouter.h"
 #include "../utils/strutils.h"
+#include "../utils/some.h"
 
 using namespace std;
 
@@ -52,6 +53,31 @@ namespace runtofuServer{
     }
 
     const routerItem *httpRouter::matchPathInfoRouter(const string &uri, const routerItem *router, map <string, string> &args){
+        //请求的URL的切片
+        vector <string> pathInfo;
+        StrUtils::strSplit(uri, '/', pathInfo);
+        //事先配置好的路由的切片，要和URL逐个比对，若有:arg、:arg:这样的还要替换
+        vector <string> confInfo;
+        StrUtils::strSplit(router->config, '/', confInfo);
+        if (pathInfo.size() > confInfo.size()){
+            return NULL;
+        }
+        size_t i;
+        for (i = 0; i < confInfo.size(); i++){
+            string val = confInfo[i];
+            //当前段以冒号“:”开头
+            if (val[0] == ':'){
+                if (pathInfo.size() > i){
+                    //非数字必须  :arg:，数字只能 :arg
+                    StrUtils::trimChar(val, ':');
+                    args[val] = pathInfo[i];
+                }
+            }
+            else if (pathInfo.size() <= i || pathInfo[i] != val){
+                return NULL;
+            }
+        }
+
         return NULL;
     }
 
