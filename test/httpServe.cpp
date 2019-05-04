@@ -64,12 +64,12 @@ int main(){
             "/abc/:aaaa:/:dddd",httpFunc1,"");
     routers.addRouter(
             runtofuServer::ROUTER_TYPE_REGEXP,
-            "/abc/(\\d+)/(\\w+)",httpFunc2,"a=$1&b=$2");
+            "/abcd/(\\d+)/(\\w+)",httpFunc2,"a=$1&b=$2");
     routers.matchRouter("/abc/wendao/444444",args);
     printArgs(args);
     routers.matchRouter("/abc/5544554/wendao",args);
     printArgs(args);
-    routers.matchRouter("/abc/333333/8888",args);
+    routers.matchRouter("/abcd/333333/8888",args);
     printArgs(args);
     return 0;
 }
