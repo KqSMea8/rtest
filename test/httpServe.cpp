@@ -24,6 +24,14 @@ void httpFunc2(runtofuServer::httpRequest &req, runtofuServer::httpResponse &rsp
     cout << "httpFunc2" << endl;
 }
 
+void printArgs(map <string, string> &args){
+    cout << endl;
+    map <string, string>::const_iterator iter;
+    for(iter=args.begin();iter!=args.end();iter++){
+        cout << iter->first << "\t" << iter->second << endl;
+    }
+    cout << endl;
+}
 
 int main(){
     string f = "./data/httpRequest.txt";
@@ -58,7 +66,10 @@ int main(){
             runtofuServer::ROUTER_TYPE_REGEXP,
             "/abc/(\\d+)/(\\w+)",httpFunc2,"a=$1&b=$2");
     routers.matchRouter("/abc/wendao/444444",args);
+    printArgs(args);
     routers.matchRouter("/abc/5544554/wendao",args);
+    printArgs(args);
     routers.matchRouter("/abc/333333/8888",args);
+    printArgs(args);
     return 0;
 }
