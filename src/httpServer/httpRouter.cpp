@@ -84,21 +84,25 @@ namespace runtofuServer{
 
     const routerItem *httpRouter::matchRegexpRouter(const string &uri, const routerItem *router, map <string, string> &args){
         RegExp reg(router->config);
-        if (!reg.reg_match(uri)){
+        if (reg.reg_match(uri) != 0){
+			cout << "httpRouter::matchRegexpRouter:regexp not match\t"<<router->config << "\t" << uri << endl;
             return NULL;
         }
         vector <vector< string >> subList;
         reg.reg_match_all(uri, subList);
-        string argStr = router->config;
+        string argStr = router->extParam;
         size_t i = 1;
         if (subList.size() > 0){
             vector < vector < string >> ::const_iterator iter;
             for (iter = subList.begin(); iter != subList.end(); iter++){
                 vector< string >::const_iterator iter1;
                 for (iter1 = iter->begin(); iter1 != iter->end(); iter1++){
+					if(*iter1 == uri){
+						continue;
+					}
                     string tmpArgStr = argStr;
                     char buf[256] = {0};
-                    sprintf(buf,"$%lu",i);
+                    sprintf(buf,"$%lu",i++);
                     StrUtils::strReplace(argStr,buf,*iter1,tmpArgStr);
                     argStr = tmpArgStr;
                 }
