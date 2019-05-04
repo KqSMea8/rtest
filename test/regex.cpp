@@ -102,6 +102,16 @@ int main(){
     string testTestTest = "abc\0d";
     cout << testTestTest << endl << endl;
 
+    cout << "reg_match" << endl;
+    string matchStr2 = "/abcd/333333/8888";
+    runtofuServer::RegExp regExp22("/abcd/(\\d+)/(\\w+)");
+    int matchRet2 = regExp22.reg_match(matchStr2);
+    cout << "matchRet=" << matchRet2 << endl;
+
+    string testTestTest = "abc\0d";
+    cout << testTestTest << endl << endl;
+
+
 
     cout << "reg_replace" << endl;
     string splitStr44 = "Showing 11 changed files  with 246 additions and 148 deletions";
