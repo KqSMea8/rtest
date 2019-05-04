@@ -7,6 +7,7 @@
 #include "httpRouter.h"
 #include "../utils/strutils.h"
 #include "../utils/some.h"
+#include "../utils/regexp.h"
 
 using namespace std;
 
@@ -82,6 +83,42 @@ namespace runtofuServer{
     }
 
     const routerItem *httpRouter::matchRegexpRouter(const string &uri, const routerItem *router, map <string, string> &args){
+        RegExp reg(router->config);
+        if (!reg.reg_match(uri)){
+            return NULL;
+        }
+        vector <vector< string >> subList;
+        reg.reg_match_all(uri, subList);
+        string argStr = router->config;
+        size_t i = 1;
+        if (subList.size() > 0){
+            vector < vector < string >> ::const_iterator iter;
+            for (iter = subList.begin(); iter != subList.end(); iter++){
+                vector< string >::const_iterator iter1;
+                for (iter1 = iter->begin(); iter1 != iter->end(); iter1++){
+                    string tmpArgStr = argStr;
+                    char buf[256] = {0};
+                    sprintf(buf,"$%lu",i);
+                    StrUtils::strReplace(argStr,buf,*iter1,tmpArgStr);
+                    argStr = tmpArgStr;
+                }
+            }
+        }
+
+        vector <string> tmpArgVec;
+        size_t pos;
+        StrUtils::strSplit(argStr, '&', tmpArgVec);
+        vector< string >::const_iterator vecStrIter;
+        for (vecStrIter = tmpArgVec.begin(); vecStrIter != tmpArgVec.end(); vecStrIter++){
+            pos = vecStrIter->find_first_of("=", 0);
+            if (pos == string::npos){
+                continue;
+            }
+            string k(*vecStrIter, 0, pos);
+            string v(*vecStrIter, pos + 1);
+            args[k]=v;
+        }
+
         return NULL;
     }
 
