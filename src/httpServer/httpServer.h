@@ -16,7 +16,13 @@
 
 namespace runtofuServer{
     class httpServer{
+    public:
+        httpServer();
 
+        ~httpServer();
+
+        //路由信息
+        httpRouter routers;
     };
 } //namespace runtofuServer
 
