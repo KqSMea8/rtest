@@ -82,9 +82,13 @@ namespace runtofuServer{
             //当前段以冒号“:”开头
             if (val[0] == ':'){
                 if (pathInfo.size() > i){
-                    //非数字必须  :arg:，数字只能 :arg
+                    string pathVal = pathInfo[i];
+                    //非数字必须 :arg:，数字只能 :arg
+                    if (!SomeUtils::isAllNumber(pathVal) && val[val.size() - 1] != ':'){
+                        return NULL;
+                    }
                     StrUtils::trimChar(val, ':');
-                    args[val] = pathInfo[i];
+                    args[val] = pathVal;
                 }
             }
             else if (pathInfo.size() <= i || pathInfo[i] != val){
