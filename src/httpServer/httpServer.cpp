@@ -22,12 +22,87 @@ namespace runtofuServer{
 
         void run();
 
+        void readD();
     private:
         int sockFD;
     };
 
     void httpTask::run(){
-        cout << "task:" << sockFD << endl;
+        cout << "start task:" << sockFD << endl;
+        struct epoll_event ev;
+        struct epoll_event events[MAX_EVENTS];
+        int epfd = epoll_create(MAX_EVENTS);
+        if (epfd < 0){
+            perror("epoll_create failed");
+            close(this->sockFD);
+            return;
+        }
+        ev.data.fd = this->sockFD;
+        ev.events = EPOLLIN | EPOLLET;
+        int ret = epoll_ctl(epfd, EPOLL_CTL_ADD, this->sockFD, &ev);
+        if (ret != 0){
+            perror("epoll_ctl");
+            close(this->sockFD);
+            return;
+        }
+
+        int nfds, i;
+        nfds = epoll_wait(epfd, events, MAX_EVENTS, 500);
+        for (i = 0; i < nfds; ++i){
+            if (events[i].data.fd == this->sockFD){
+                cout << "events:" << events[i].events << ",errno:" << errno << endl;
+                //有连接到来
+                if (events[i].events & EPOLLIN){
+                    this->readD();
+                }
+                else if (events[i].events & EPOLLERR || events[i].events & EPOLLHUP){//有异常发生
+                    close(this->sockFD);
+                    return;
+                }
+            }
+        }
+
+        close(this->sockFD);
+        cout << "end task:" << sockFD << endl;
+    }
+
+    void httpTask::readD(){
+        char buf[MAX_SOCK_BUF_SIZE];
+        //读到的字节数
+        int nread;
+        char output[1024] = {0};
+        sprintf(output,"sockFD=%d",sockFD);
+        do{
+            bzero(buf, MAX_SOCK_BUF_SIZE);
+            nread = read(this->sockFD, buf, MAX_SOCK_BUF_SIZE);
+            cout << nread << endl;
+            //读到数据
+            if (nread > 0){
+                cout << "read:" << nread << "\t" << buf << ",errno:" << errno << endl;
+            }
+                //读取失败
+            else if (nread < 0){
+                //没有数据了
+                if (errno == EAGAIN){
+                    cout << "read:" << nread << ",errno:" << errno << ",no data" << endl;
+                    break;
+                }
+                    //可能被内部中断信号打断,经过验证对非阻塞socket并未收到此错误,应该可以省掉该步判断
+                else if (errno == EINTR){
+                    cout << "read:" << nread << ",errno:" << errno << ",interrupt" << endl;
+                }
+                    //客户端主动关闭
+                else{
+                    cout << "read:" << nread << ",errno:" << errno << ",peer error" << endl;
+                    break;
+                }
+            }
+                //客户端主动关闭
+            else if (nread == 0){
+                cout << "ReadThread, read:" << nread << ",errno:" << errno << ",peer close" << endl;
+                break;
+            }
+        }while (true);
     }
 
     httpServer::httpServer(uint16_t p) : port(p), listenFD(0), epollFD(0){

@@ -10,14 +10,19 @@
 #include<stdint.h>
 #include<sys/epoll.h>
 #include<sys/types.h>
+#include<iostream>
 #include<sys/socket.h>
 #include<sys/stat.h>
 #include<sys/time.h>
 #include<sys/shm.h>
 #include <arpa/inet.h>
+
 #ifdef HAVE_NETINET_IN_H
 #include <netinet/in.h>
 #endif
+
+
+using namespace std;
 
 #define TEST_PORT  5000
 #define BUFFER_SIZE 1024000
@@ -38,12 +43,20 @@ int main(){
     }
 
     char sendbuf[BUFFER_SIZE] = {0};
+    char recvbuf[BUFFER_SIZE] = {0};
+
     while (fgets(sendbuf, sizeof(sendbuf), stdin) != NULL){
         send(sock_cli, sendbuf, strlen(sendbuf), 0); ///发送
-        if (strcmp(sendbuf, "exit\n") == 0)
+        if (strcmp(sendbuf, "exit\n") == 0){
+            cout << "-----------break--------------" << endl;
             break;
+        }
         memset(sendbuf, 0, sizeof(sendbuf));
     }
+
+    read(sock_cli, recvbuf, BUFFER_SIZE);
+    std::cout << "recvbuf=" << recvbuf << endl;
+    memset(recvbuf, 0, sizeof(recvbuf));
 
     close(sock_cli);
     return 0;
