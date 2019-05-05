@@ -9,6 +9,10 @@
 #include<string>
 #include<vector>
 #include<map>
+#include "httpRouter.h"
+#include "httpRequest.h"
+#include "httpResponse.h"
+#include "httpStatus.h"
 
 namespace runtofuServer{
     class httpServer{
