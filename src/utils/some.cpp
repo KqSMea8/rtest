@@ -196,6 +196,26 @@ namespace runtofuServer{
         ms = 1000000 * (uint64_t) tv.tv_sec + (uint64_t) tv.tv_usec;
     }
 
+    //是否全部由数字组成
+    bool SomeUtils::isAllNumber(const std::string &str){
+        string::const_iterator iter;
+        for (iter = str.begin(); iter != str.end(); iter++){
+            if ("0" != *iter &&
+                "1" != *iter &&
+                "2" != *iter &&
+                "3" != *iter &&
+                "4" != *iter &&
+                "5" != *iter &&
+                "6" != *iter &&
+                "7" != *iter &&
+                "8" != *iter &&
+                "9" != *iter){
+                return false;
+            }
+        }
+        return true;
+    }
+
     //当前的纳秒数
     void SomeUtils::getNanoSeconds(uint64_t &ns){
 #ifdef linux || _UNIX

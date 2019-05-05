@@ -33,6 +33,9 @@ namespace runtofuServer{
         //对整数向上圆整为2^n倍数
         static size_t up2n(size_t num);
 
+        //判断字符串全部由数字组成
+        static bool isAllNumber(const std::string &str);
+
         //判断文件是否存在
         static bool isFileExist(const std::string &filePath);
 

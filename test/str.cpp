@@ -238,14 +238,7 @@ int main(){
     cout << "httpRequest::DELETE=" << runtofuServer::httpRequest::DELETE << endl;
     cout << endl;
 
-    cout << "---------istringstream---------" << endl;
-    istringstream strIN(headersStrTmp);
-    string tmpLine;
-    getline(strIN, tmpLine);
-    cout << tmpLine << endl;
-    getline(strIN, tmpLine);
-    cout << tmpLine << endl;
-    char istreamreadbuf[64] = {0};
-    strIN.read(istreamreadbuf, 64);
-    cout << "istreamreadbuf=" << istreamreadbuf << endl;
+    cout << "---------isAllNumber---------" << endl;
+    cout << runtofuServer::SomeUtils::isAllNumber("444444444") << endl;
+    cout << runtofuServer::SomeUtils::isAllNumber("444444f444") << endl;
 };
