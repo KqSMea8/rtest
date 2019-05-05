@@ -22,9 +22,11 @@ namespace runtofuServer{
     }
 
     void httpRouter::addRouter(ROUTER_TYPE t, const string &c, httpFunc f, const string &extParam){
+        string tmpUri = c;
+        StrUtils::trimChar(tmpUri, '/');
         routerItem *ritem = new routerItem;
         ritem->type = t;
-        ritem->config = c;
+        ritem->config = tmpUri;
         ritem->func = f;
         ritem->extParam = extParam;
         routerList.push_back(ritem);
@@ -37,14 +39,14 @@ namespace runtofuServer{
         vector< routerItem * >::const_iterator iter;
         for (iter = routerList.begin(); iter != routerList.end(); iter++){
             if ((*iter)->type == ROUTER_TYPE_PATH_INFO){
-                if(matchPathInfoRouter(uri, *iter, args)){
-					return *iter;
-				}
+                if (this->matchPathInfoRouter(tmpUri, *iter, args)){
+                    return *iter;
+                }
             }
             else if ((*iter)->type == ROUTER_TYPE_REGEXP){
-                if(matchRegexpRouter(uri, *iter, args)){
-					return *iter;	
-				}
+                if (this->matchRegexpRouter(tmpUri, *iter, args)){
+                    return *iter;
+                }
             }
         }
         return NULL;
@@ -64,10 +66,10 @@ namespace runtofuServer{
      *          /ggtest/44444
      **/
     bool httpRouter::matchPathInfoRouter(const string &uri, const routerItem *router, map <string, string> &args){
-		if(router->config.find(":") == string::npos && router->config == uri){
-			return true;
-		}
-		map<string,string> tmpArgs;
+        if (router->config.find(":") == string::npos && router->config == uri){
+            return true;
+        }
+        map <string, string> tmpArgs;
         //请求的URL的切片
         vector <string> pathInfo;
         StrUtils::strSplit(uri, '/', pathInfo);
@@ -96,10 +98,10 @@ namespace runtofuServer{
                 return false;
             }
         }
-		map<string,string>::const_iterator iter;
-		for(iter=tmpArgs.begin();iter!=tmpArgs.end();iter++){
-			args[iter->first] = iter->second;
-		}
+        map< string, string >::const_iterator iter;
+        for (iter = tmpArgs.begin(); iter != tmpArgs.end(); iter++){
+            args[iter->first] = iter->second;
+        }
         return true;
     }
 
@@ -109,7 +111,7 @@ namespace runtofuServer{
      * 则将请求中aid后面的字符串挑出来赋给aid，cid后面的字符串挑出来赋给cid
      */
     bool httpRouter::matchRegexpRouter(const string &uri, const routerItem *router, map <string, string> &args){
-		map<string,string> tmpArgs;
+        map <string, string> tmpArgs;
         RegExp reg(router->config);
         if (reg.reg_match(uri) != 0){
             cout << "httpRouter::matchRegexpRouter:regexp not match\t" << router->config << "\t" << uri << endl;
@@ -151,10 +153,10 @@ namespace runtofuServer{
             tmpArgs[k] = v;
         }
 
-		map<string,string>::const_iterator iter;
-		for(iter=tmpArgs.begin();iter!=tmpArgs.end();iter++){
-			args[iter->first] = iter->second;
-		}
+        map< string, string >::const_iterator iter;
+        for (iter = tmpArgs.begin(); iter != tmpArgs.end(); iter++){
+            args[iter->first] = iter->second;
+        }
         return true;
     }
 

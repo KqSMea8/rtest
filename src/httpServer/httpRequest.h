@@ -70,6 +70,9 @@ namespace runtofuServer{
         //请求时的uri
         std::string uri;
 
+        //客户端IP
+        std::string client_ip
+
         //请求时用的协议，如"HTTP/1.1"
         std::string protocol;
 
