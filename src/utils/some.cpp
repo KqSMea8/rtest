@@ -198,18 +198,21 @@ namespace runtofuServer{
 
     //是否全部由数字组成
     bool SomeUtils::isAllNumber(const std::string &str){
+		if(str.size() <= 0){
+			return false;
+		}
         string::const_iterator iter;
         for (iter = str.begin(); iter != str.end(); iter++){
-            if ("0" != *iter &&
-                "1" != *iter &&
-                "2" != *iter &&
-                "3" != *iter &&
-                "4" != *iter &&
-                "5" != *iter &&
-                "6" != *iter &&
-                "7" != *iter &&
-                "8" != *iter &&
-                "9" != *iter){
+            if (*iter != '0' &&
+                *iter != '1' &&
+                *iter != '2' &&
+                *iter != '3' &&
+                *iter != '4' &&
+                *iter != '5' &&
+                *iter != '6' &&
+                *iter != '7' &&
+                *iter != '8' &&
+                *iter != '9'){
                 return false;
             }
         }

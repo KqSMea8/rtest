@@ -241,4 +241,6 @@ int main(){
     cout << "---------isAllNumber---------" << endl;
     cout << runtofuServer::SomeUtils::isAllNumber("444444444") << endl;
     cout << runtofuServer::SomeUtils::isAllNumber("444444f444") << endl;
+    cout << runtofuServer::SomeUtils::isAllNumber("0") << endl;
+    cout << runtofuServer::SomeUtils::isAllNumber("") << endl;
 };
