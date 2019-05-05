@@ -126,10 +126,9 @@ namespace runtofuServer{
                         connfd = ::accept(this->listenFD, (sockaddr *) &cliaddr, &clilen);
                         if (connfd > 0){
                             cout << "accept:" << connfd << ",errno:" << errno << ",connect:" << inet_ntoa(cliaddr.sin_addr) << ":" << ntohs(cliaddr.sin_port) << endl;
-                            if (this->threadManager->get() != NULL){
+                            if (this->threadManager.get() != NULL){
                                 boost::shared_ptr <Runnable> task = boost::shared_ptr< Runnable >(new httpTask(connfd));
                                 this->threadManager->add(task);
-                                return ret;
                             }
                         }
                         else{

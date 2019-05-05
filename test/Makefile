@@ -11,7 +11,7 @@ INC_DIR=-I${UTILS_DIR} \
         -I${CLIENT_DIR} \
 		-I${HTTPSERVER_DIR} \
 		-lctemplate -lz -luuid -lmysqlclient -lhiredis -lyaml-cpp -lgtest -lconfig -llog4cplus -ljsoncpp \
-        -lpcre -lcurl -lm -lpthread -levent 
+        -lpcre -lcurl -lm -lpthread -levent -lthrift -lthriftnb 
 
 
 utils_objs=${UTILS_DIR}/strutils.o \
