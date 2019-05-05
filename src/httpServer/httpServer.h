@@ -9,6 +9,30 @@
 #include<string>
 #include<vector>
 #include<map>
+#include<stdlib.h>
+#include<unistd.h>
+#include<string.h>
+#include<stdio.h>
+#include<stdint.h>
+#include<fcntl.h>
+#include<deque>
+#include<pthread.h>
+#include<semaphore.h>
+#include<errno.h>
+#include<signal.h>
+#include<cctype>
+#include<sstream>
+#include<utility>
+#include<stdexcept>
+#include<netinet/in.h>
+#include<arpa/inet.h>
+#include<iostream>
+#include<sys/epoll.h>
+#include<sys/types.h>
+#include<sys/socket.h>
+#include<sys/stat.h>
+#include<sys/time.h>
+#include<sys/shm.h>
 #include "httpRouter.h"
 #include "httpRequest.h"
 #include "httpResponse.h"

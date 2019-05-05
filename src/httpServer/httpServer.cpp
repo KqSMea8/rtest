@@ -61,7 +61,7 @@ namespace runtofuServer{
         svraddr.sin_port = htons(this->port);
         bind(this->listenFD, (sockaddr * ) & svraddr, sizeof(svraddr));
         //监听,准备接收连接
-        ret = listen(this->listenFD, LISTEN_BACKLOG_SIZE);
+        ret = ::listen(this->listenFD, LISTEN_BACKLOG_SIZE);
         if (ret != 0){
             perror("listen");
             close(this->listenFD);
@@ -90,7 +90,7 @@ namespace runtofuServer{
                 if (this->events[i].events & EPOLLIN){
                     do{
                         clilen = sizeof(struct sockaddr);
-                        connfd = accept(this->listenFD, (sockaddr *) &cliaddr, &clilen);
+                        connfd = ::accept(this->listenFD, (sockaddr *) &cliaddr, &clilen);
                         if (connfd > 0){
                             cout << "AcceptThread, accept:" << connfd << ",errno:" << errno << ",connect:" << inet_ntoa(cliaddr.sin_addr) << ":" << ntohs(cliaddr.sin_port) << endl;
                         }
