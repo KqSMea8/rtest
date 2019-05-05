@@ -7,10 +7,35 @@
 #include "httpServer.h"
 
 using namespace std;
+using namespace apache::thrift;
+using namespace apache::thrift::concurrency;
+using apache::thrift::concurrency::Runnable;
+using apache::thrift::concurrency::ThreadManager;
+using apache::thrift::concurrency::PosixThreadFactory;
 
 namespace runtofuServer{
-    httpServer::httpServer(uint16_t p) : port(p), listenFD(0), epollFD(0){
+    class httpTask : public Runnable{
+    public:
+        httpTask(int fd) : sockFD(fd){}
 
+        virtual ~httpTask(){}
+
+        void run();
+
+    private:
+        int sockFD;
+    };
+
+    void httpTask::run(){
+        cout << "task:" << sockFD << endl;
+    }
+
+    httpServer::httpServer(uint16_t p) : port(p), listenFD(0), epollFD(0){
+        this->threadManager = apache::thrift::concurrency::ThreadManager::newSimpleThreadManager(30);
+        boost::shared_ptr <PosixThreadFactory> threadFactory = boost::shared_ptr< PosixThreadFactory >(new PosixThreadFactory());
+        threadFactory->setStackSize(8);
+        this->threadManager->threadFactory(threadFactory);
+        this->threadManager->start();
     }
 
     //启动函数
@@ -93,17 +118,22 @@ namespace runtofuServer{
         for (i = 0; i < nfds; ++i){
             //是本监听socket上的事件
             if (this->events[i].data.fd == this->listenFD){
-                cout << "AcceptThread, events:" << this->events[i].events << ",errno:" << errno << endl;
+                cout << "events:" << this->events[i].events << ",errno:" << errno << endl;
                 //有连接到来
                 if (this->events[i].events & EPOLLIN){
                     do{
                         clilen = sizeof(struct sockaddr);
                         connfd = ::accept(this->listenFD, (sockaddr *) &cliaddr, &clilen);
                         if (connfd > 0){
-                            cout << "AcceptThread, accept:" << connfd << ",errno:" << errno << ",connect:" << inet_ntoa(cliaddr.sin_addr) << ":" << ntohs(cliaddr.sin_port) << endl;
+                            cout << "accept:" << connfd << ",errno:" << errno << ",connect:" << inet_ntoa(cliaddr.sin_addr) << ":" << ntohs(cliaddr.sin_port) << endl;
+                            if (this->threadManager->get() != NULL){
+                                boost::shared_ptr <Runnable> task = boost::shared_ptr< Runnable >(new httpTask(connfd));
+                                this->threadManager->add(task);
+                                return ret;
+                            }
                         }
                         else{
-                            cout << "AcceptThread, accept:" << connfd << ",errno:" << errno << endl;
+                            cout << "accept:" << connfd << ",errno:" << errno << endl;
                             //没有连接需要接收了
                             if (errno == EAGAIN){
                                 break;

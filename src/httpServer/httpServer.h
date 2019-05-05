@@ -33,6 +33,8 @@
 #include<sys/stat.h>
 #include<sys/time.h>
 #include<sys/shm.h>
+#include <thrift/concurrency/ThreadManager.h>
+#include <thrift/concurrency/PosixThreadFactory.h>
 #include "httpRouter.h"
 #include "httpRequest.h"
 #include "httpResponse.h"
@@ -66,6 +68,9 @@ namespace runtofuServer{
         struct epoll_event ev;
         //监听事件数组
         struct epoll_event events[MAX_EVENTS];
+
+        //线程管理
+        boost::shared_ptr <apache::thrift::concurrency::ThreadManager> threadManager;
 
         //开始监听
         void listen();
