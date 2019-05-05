@@ -62,14 +62,14 @@ namespace runtofuServer{
          *          /ggtest/abc
          *          /ggtest/44444
          **/
-        const routerItem *matchPathInfoRouter(const std::string &uri, const routerItem *router, std::map <std::string, std::string> &args);
+        bool matchPathInfoRouter(const std::string &uri, const routerItem *router, std::map <std::string, std::string> &args);
 
         /**
          * 匹配正则路由，直接用正则表达式去匹配请求的URL，并把捕获的参数回传到Param配置里,如
          * config 为 `^ggtest/aid(\w+?)/cid(\d+)$`，Param 为 aid=$1&cid=$2
          * 则将请求中aid后面的字符串挑出来赋给aid，cid后面的字符串挑出来赋给cid
          */
-        const routerItem *matchRegexpRouter(const std::string &uri, const routerItem *router, std::map <std::string, std::string> &args);
+        bool matchRegexpRouter(const std::string &uri, const routerItem *router, std::map <std::string, std::string> &args);
     };
 } //namespace runtofuServer
 

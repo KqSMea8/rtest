@@ -32,25 +32,22 @@ namespace runtofuServer{
 
     //匹配路由规则
     const routerItem *httpRouter::matchRouter(const string &uri, map <string, string> &args){
-        const routerItem *ret = NULL;
         string tmpUri = uri;
         StrUtils::trimChar(tmpUri, '/');
         vector< routerItem * >::const_iterator iter;
         for (iter = routerList.begin(); iter != routerList.end(); iter++){
             if ((*iter)->type == ROUTER_TYPE_PATH_INFO){
-                ret = matchPathInfoRouter(uri, *iter, args);
-                if (ret != NULL){
-                    return ret;
-                }
+                if(matchPathInfoRouter(uri, *iter, args)){
+					return *iter;
+				}
             }
             else if ((*iter)->type == ROUTER_TYPE_REGEXP){
-                ret = matchRegexpRouter(uri, *iter, args);
-                if (ret != NULL){
-                    return ret;
-                }
+                if(matchRegexpRouter(uri, *iter, args)){
+					return *iter;	
+				}
             }
         }
-        return ret;
+        return NULL;
     }
 
     /**
@@ -66,7 +63,8 @@ namespace runtofuServer{
      *          /ggtest/abc
      *          /ggtest/44444
      **/
-    const routerItem *httpRouter::matchPathInfoRouter(const string &uri, const routerItem *router, map <string, string> &args){
+    bool httpRouter::matchPathInfoRouter(const string &uri, const routerItem *router, map <string, string> &args){
+		map<string,string> tmpArgs;
         //请求的URL的切片
         vector <string> pathInfo;
         StrUtils::strSplit(uri, '/', pathInfo);
@@ -74,7 +72,7 @@ namespace runtofuServer{
         vector <string> confInfo;
         StrUtils::strSplit(router->config, '/', confInfo);
         if (pathInfo.size() > confInfo.size()){
-            return NULL;
+            return false;
         }
         size_t i;
         for (i = 0; i < confInfo.size(); i++){
@@ -85,18 +83,21 @@ namespace runtofuServer{
                     string pathVal = pathInfo[i];
                     //非数字必须 :arg:，数字只能 :arg
                     if (!SomeUtils::isAllNumber(pathVal) && val[val.size() - 1] != ':'){
-                        return NULL;
+                        return false;
                     }
                     StrUtils::trimChar(val, ':');
-                    args[val] = pathVal;
+                    tmpArgs[val] = pathVal;
                 }
             }
             else if (pathInfo.size() <= i || pathInfo[i] != val){
-                return NULL;
+                return false;
             }
         }
-
-        return NULL;
+		map<string,string>::const_iterator iter;
+		for(iter=tmpArgs.begin();iter!=tmpArgs.end();iter++){
+			args[iter->first] = iter->second;
+		}
+        return true;
     }
 
     /**
@@ -104,11 +105,12 @@ namespace runtofuServer{
      * config 为 `^ggtest/aid(\w+?)/cid(\d+)$`，Param 为 aid=$1&cid=$2
      * 则将请求中aid后面的字符串挑出来赋给aid，cid后面的字符串挑出来赋给cid
      */
-    const routerItem *httpRouter::matchRegexpRouter(const string &uri, const routerItem *router, map <string, string> &args){
+    bool httpRouter::matchRegexpRouter(const string &uri, const routerItem *router, map <string, string> &args){
+		map<string,string> tmpArgs;
         RegExp reg(router->config);
         if (reg.reg_match(uri) != 0){
             cout << "httpRouter::matchRegexpRouter:regexp not match\t" << router->config << "\t" << uri << endl;
-            return NULL;
+            return false;
         }
         vector <vector< string >> subList;
         reg.reg_match_all(uri, subList);
@@ -143,10 +145,14 @@ namespace runtofuServer{
             }
             string k(*vecStrIter, 0, pos);
             string v(*vecStrIter, pos + 1);
-            args[k] = v;
+            tmpArgs[k] = v;
         }
 
-        return NULL;
+		map<string,string>::const_iterator iter;
+		for(iter=tmpArgs.begin();iter!=tmpArgs.end();iter++){
+			args[iter->first] = iter->second;
+		}
+        return true;
     }
 
     httpRouter::~httpRouter(){
