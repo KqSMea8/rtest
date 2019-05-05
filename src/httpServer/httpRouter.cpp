@@ -64,6 +64,9 @@ namespace runtofuServer{
      *          /ggtest/44444
      **/
     bool httpRouter::matchPathInfoRouter(const string &uri, const routerItem *router, map <string, string> &args){
+		if(router->config.find(":") == string::npos && router->config == uri){
+			return true;
+		}
 		map<string,string> tmpArgs;
         //请求的URL的切片
         vector <string> pathInfo;

@@ -63,9 +63,14 @@ int main(){
             runtofuServer::ROUTER_TYPE_PATH_INFO,
             "/abc/:aaaa:/:dddd",httpFunc1,"");
     routers.addRouter(
+            runtofuServer::ROUTER_TYPE_PATH_INFO,
+            "/abc/aaaa/dddd",httpFunc1,"");
+    routers.addRouter(
             runtofuServer::ROUTER_TYPE_REGEXP,
             "/abcd/(\\d+)/(\\w+)",httpFunc2,"a=$1&b=$2");
     routers.matchRouter("/abc/wendao/444444",args);
+    printArgs(args);
+    routers.matchRouter("/abc/aaaa/dddd",args);
     printArgs(args);
     routers.matchRouter("/abc/5544554/wendao",args);
     printArgs(args);
