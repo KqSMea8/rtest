@@ -26,8 +26,8 @@ void httpFunc2(runtofuServer::httpRequest &req, runtofuServer::httpResponse &rsp
 
 void printArgs(map <string, string> &args){
     cout << endl;
-    map <string, string>::const_iterator iter;
-    for(iter=args.begin();iter!=args.end();iter++){
+    map< string, string >::const_iterator iter;
+    for (iter = args.begin(); iter != args.end(); iter++){
         cout << iter->first << "\t" << iter->second << endl;
     }
     cout << endl;
@@ -59,22 +59,31 @@ int main(){
     //解析路由信息
     map <string, string> args;
     runtofuServer::httpRouter routers;
+    const runtofuServer::routerItem *rItem;
     routers.addRouter(
             runtofuServer::ROUTER_TYPE_PATH_INFO,
-            "/abc/:aaaa:/:dddd",httpFunc1,"");
+            "/abc/:aaaa:/:dddd", httpFunc1, "");
     routers.addRouter(
             runtofuServer::ROUTER_TYPE_PATH_INFO,
-            "/abc/aaaa/dddd",httpFunc1,"");
+            "/abc/aaaa/dddd", httpFunc1, "");
     routers.addRouter(
             runtofuServer::ROUTER_TYPE_REGEXP,
-            "/abcd/(\\d+)/(\\w+)",httpFunc2,"a=$1&b=$2");
-    routers.matchRouter("/abc/wendao/444444",args);
+            "/abcd/(\\d+)/(\\w+)", httpFunc2, "a=$1&b=$2");
+    string uri = "/abc/wendao/444444";
+    rItem = routers.matchRouter(uri, args);
+    cout << uri << "\tmatch\t" << (rItem == NULL ? "failed" : rItem->config) << endl;
     printArgs(args);
-    routers.matchRouter("/abc/aaaa/dddd",args);
+    uri = "/abc/aaaa/dddd";
+    rItem = routers.matchRouter(uri, args);
+    cout << uri << "\tmatch\t" << (rItem == NULL ? "failed" : rItem->config) << endl;
     printArgs(args);
-    routers.matchRouter("/abc/5544554/wendao",args);
+    uri = "/abc/5544554/wendao";
+    rItem = routers.matchRouter(uri, args);
+    cout << uri << "\tmatch\t" << (rItem == NULL ? "failed" : rItem->config) << endl;
     printArgs(args);
-    routers.matchRouter("/abcd/333333/8888",args);
+    uri = "/abcd/333333/8888";
+    rItem = routers.matchRouter(uri, args);
+    cout << uri << "\tmatch\t" << (rItem == NULL ? "failed" : rItem->config) << endl;
     printArgs(args);
     return 0;
 }
