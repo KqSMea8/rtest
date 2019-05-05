@@ -9,8 +9,16 @@
 using namespace std;
 
 namespace runtofuServer{
-    httpServer::httpServer(uint16_t p) : port(p), listenFD(0){
+    httpServer::httpServer(uint16_t p) : port(p), listenFD(0), epollFD(0){
 
+    }
+
+    //启动函数
+    void httpServer::start(){
+        this->listen();
+        while (true){
+            this->accept();
+        }
     }
 
     //开始监听

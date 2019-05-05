@@ -13,6 +13,7 @@
 #include "../utils/some.h"
 #include "../utils/strutils.h"
 #include "../httpServer/httpRouter.h"
+#include "../httpServer/httpServer.h"
 
 using namespace std;
 
@@ -85,5 +86,9 @@ int main(){
     rItem = routers.matchRouter(uri, args);
     cout << uri << "\tmatch\t" << (rItem == NULL ? "failed" : rItem->config) << endl;
     printArgs(args);
+
+
+    runtofuServer::httpServer svr(5000);
+    svr.start();
     return 0;
 }
