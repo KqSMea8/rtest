@@ -48,11 +48,12 @@ namespace runtofuServer{
                 //没有数据了
                 if (errno == EAGAIN){
                     cout << "[EAGAIN]read:" << nread << ",errno:" << errno << ",no data" << endl;
-                    break;
+                    continue;
                 }
                     //可能被内部中断信号打断,经过验证对非阻塞socket并未收到此错误,应该可以省掉该步判断
                 else if (errno == EINTR){
                     cout << "read:" << nread << ",errno:" << errno << ",interrupt" << endl;
+                    break;
                 }
                     //客户端主动关闭
                 else{
@@ -166,6 +167,7 @@ namespace runtofuServer{
                         clilen = sizeof(struct sockaddr);
                         connfd = ::accept(this->listenFD, (sockaddr *) &cliaddr, &clilen);
                         if (connfd > 0){
+                            this->setNonBlocking(connfd);
                             cout << "accept:" << connfd << ",errno:" << errno << ",connect:" << inet_ntoa(cliaddr.sin_addr) << ":" << ntohs(cliaddr.sin_port) << endl;
                             if (this->threadManager.get() != NULL){
                                 boost::shared_ptr <Runnable> task = boost::shared_ptr< Runnable >(new httpTask(connfd));
