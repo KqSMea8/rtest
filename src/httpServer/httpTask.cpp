@@ -62,7 +62,6 @@ namespace runtofuServer{
         //解析请求
         httpRequest httpReq;
         httpReq.parseBody(bbfu.rawData(), bbfu.size());
-        httpReq.printReq();
 
         httpResponse httpRsp;
         string rspStr;
@@ -76,11 +75,20 @@ namespace runtofuServer{
             httpRsp.renderHTML(rspStr);
         }
         else{
+            if (args.size() > 0){
+                map< string, string >::const_iterator iter;
+                for (iter = args.begin(); iter != args.end(); iter++){
+                    vector <string> tmpa;
+                    tmpa.push_back(iter->second);
+                    httpReq.args[iter->first] = tmpa;
+                }
+            }
             httpRsp.setBody("{\"q\":\"http s\",\"p\":false,\"g\":[{\"type\":\"sug\",\"sa\":\"s_1\",\"q\":\"http status 500\"},{\"type\":\"sug\",\"sa\":\"s_2\",\"q\":\"http status 400\"},{\"type\":\"sug\",\"sa\":\"s_3\",\"q\":\"http socket\"},{\"type\":\"sug\",\"sa\":\"s_4\",\"q\":\"http session\"},{\"type\":\"sug\",\"sa\":\"s_5\",\"q\":\"httpstatus404解决步骤\"},{\"type\":\"sug\",\"sa\":\"s_6\",\"q\":\"http status\"},{\"type\":\"sug\",\"sa\":\"s_7\",\"q\":\"http stat jseea\"},{\"type\":\"sug\",\"sa\":\"s_8\",\"q\":\"http socket tcp区别\"},{\"type\":\"sug\",\"sa\":\"s_9\",\"q\":\"http status 404-not found\"},{\"type\":\"sug\",\"sa\":\"s_10\",\"q\":\"http status 500解决\"}]}");
             httpRsp.renderJson(rspStr);
         }
         write(this->sockFD, rspStr.c_str(), rspStr.size());
         close(this->sockFD);
+        httpReq.printReq();
         cout << "end task:" << sockFD << endl;
     }
 
