@@ -47,7 +47,7 @@ int main(){
     svr.routers.addRouter(runtofuServer::ROUTER_TYPE_PATH_INFO, "", httpIndex, "");
     svr.routers.addRouter(runtofuServer::ROUTER_TYPE_PATH_INFO, "article/:aid", httpFunc1, "");
     svr.routers.addRouter(runtofuServer::ROUTER_TYPE_PATH_INFO, "article/:aid/comment/:cid", httpFunc2, "");
-    svr.routers.addRouter(runtofuServer::ROUTER_TYPE_REGEXP, "article/(comment/mark)", httpFunc3, "t=$1");
+    svr.routers.addRouter(runtofuServer::ROUTER_TYPE_REGEXP, "article/(comment|mark)", httpFunc3, "t=$1");
     svr.start();
     return 0;
 }
