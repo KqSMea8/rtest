@@ -25,8 +25,7 @@ utils_objs=${UTILS_DIR}/strutils.o \
            ${UTILS_DIR}/snowflake.o
 
 client_objs=${CLIENT_DIR}/http/http_client_utils.o \
-            ${CLIENT_DIR}/http/curl_handle.o \
-            ${CLIENT_DIR}/http/http_client_multi.o
+            ${CLIENT_DIR}/http/curl_handle.o
 
 httpServer_objs=${HTTPSERVER_DIR}/httpRequest.o \
                 ${HTTPSERVER_DIR}/httpResponse.o \
