@@ -21,7 +21,7 @@
 namespace runtofuServer{
     class httpTask : public apache::thrift::concurrency::Runnable{
     public:
-        httpTask(int fd, std::string cip, httpRouter &r) : sockFD(fd), clientIP(cip), routers(r){}
+        httpTask(int fd, std::string cip, const httpRouter &r) : sockFD(fd), clientIP(cip), routers(r){}
 
         virtual ~httpTask(){}
 
