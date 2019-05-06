@@ -42,7 +42,6 @@
 
 #define MAX_EVENTS 1024
 #define LISTEN_BACKLOG_SIZE 8
-#define MAX_SOCK_BUF_SIZE 8192
 
 namespace runtofuServer{
     class httpServer{

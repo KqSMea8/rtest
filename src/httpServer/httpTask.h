@@ -9,9 +9,13 @@
 #include<string>
 #include<vector>
 #include<map>
+#include "httpRequest.h"
+#include "httpResponse.h"
 #include "../utils/byte_buffer.h"
 #include <thrift/concurrency/ThreadManager.h>
 #include <thrift/concurrency/PosixThreadFactory.h>
+
+#define MAX_SOCK_BUF_SIZE 8192
 
 namespace runtofuServer{
     class httpTask : public apache::thrift::concurrency::Runnable{
