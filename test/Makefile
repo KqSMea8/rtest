@@ -32,7 +32,8 @@ httpServer_objs=${HTTPSERVER_DIR}/httpRequest.o \
                 ${HTTPSERVER_DIR}/httpResponse.o \
                 ${HTTPSERVER_DIR}/httpServer.o \
                 ${HTTPSERVER_DIR}/httpStatus.o \
-                ${HTTPSERVER_DIR}/httpRouter.o
+                ${HTTPSERVER_DIR}/httpRouter.o \
+                ${HTTPSERVER_DIR}/httpTask.o
 
 bin_targets = str.cpp  \
               regex.cpp \
