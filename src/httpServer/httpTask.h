@@ -9,6 +9,7 @@
 #include<string>
 #include<vector>
 #include<map>
+#include "../utils/byte_buffer.h"
 #include <thrift/concurrency/ThreadManager.h>
 #include <thrift/concurrency/PosixThreadFactory.h>
 
