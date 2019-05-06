@@ -21,7 +21,6 @@ namespace runtofuServer{
         char buf[MAX_SOCK_BUF_SIZE];
         //读到的字节数
         int nread;
-        ss
         do{
             bzero(buf, MAX_SOCK_BUF_SIZE);
             nread = read(this->sockFD, buf, MAX_SOCK_BUF_SIZE);
