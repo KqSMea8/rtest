@@ -16,7 +16,7 @@ using apache::thrift::concurrency::PosixThreadFactory;
 namespace runtofuServer{
     class httpTask : public Runnable{
     public:
-        httpTask(int fd) : sockFD(fd){}
+        httpTask(int fd, string cip) : sockFD(fd), clientIP(cip){}
 
         virtual ~httpTask(){}
 
@@ -24,6 +24,7 @@ namespace runtofuServer{
 
     private:
         int sockFD;
+        string clientIP;
     };
 
     void httpTask::run(){
@@ -170,9 +171,10 @@ namespace runtofuServer{
                         connfd = ::accept(this->listenFD, (sockaddr *) &cliaddr, &clilen);
                         if (connfd > 0){
                             //this->setNonBlocking(connfd);
-                            cout << "accept:" << connfd << ",errno:" << errno << ",connect:" << inet_ntoa(cliaddr.sin_addr) << ":" << ntohs(cliaddr.sin_port) << endl;
+                            char *clientIP = inet_ntoa(cliaddr.sin_addr);
+                            cout << "accept:" << connfd << ",errno:" << errno << ",connect:" << clientIP << ":" << ntohs(cliaddr.sin_port) << endl;
                             if (this->threadManager.get() != NULL){
-                                boost::shared_ptr <Runnable> task = boost::shared_ptr< Runnable >(new httpTask(connfd));
+                                boost::shared_ptr <Runnable> task = boost::shared_ptr< Runnable >(new httpTask(connfd, clientIP));
                                 this->threadManager->add(task);
                             }
                         }
