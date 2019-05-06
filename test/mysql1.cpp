@@ -19,9 +19,10 @@ int main(){
     const char *db = "db_runtofu";
     MYSQL mysql;
     mysql_init(&mysql);
-    if (!mysql_real_connect(&mysql, host, user, passwd, db, 0, NULL, 0)){
+    if (!mysql_real_connect(&mysql, host, user, passwd, db, 3306, NULL, 0)){
         fprintf(stderr, "connect MySQL failed:%s\n", mysql_error(&mysql));
     }
+    mysql_set_character_set(&mysql, "utf8");
     char *sql = "select * from `tag`";
     if (mysql_real_query(&mysql, sql, strlen(sql)) != 0){
         fprintf(stderr, "%s\n", mysql_error(&mysql));
