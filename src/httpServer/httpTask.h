@@ -11,6 +11,7 @@
 #include<map>
 #include "httpRequest.h"
 #include "httpResponse.h"
+#include "httpRouter.h"
 #include "../utils/byte_buffer.h"
 #include <thrift/concurrency/ThreadManager.h>
 #include <thrift/concurrency/PosixThreadFactory.h>
