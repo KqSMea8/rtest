@@ -14,19 +14,17 @@
 #include <thrift/concurrency/PosixThreadFactory.h>
 
 namespace runtofuServer{
-    class httpTask{
-        class httpTask : public apache::thrift::concurrency::Runnable{
-        public:
-            httpTask(int fd, std::string cip) : sockFD(fd), clientIP(cip){}
+    class httpTask : public apache::thrift::concurrency::Runnable{
+    public:
+        httpTask(int fd, std::string cip) : sockFD(fd), clientIP(cip){}
 
-            virtual ~httpTask(){}
+        virtual ~httpTask(){}
 
-            void run();
+        void run();
 
-        private:
-            int sockFD;
-            std::string clientIP;
-        };
+    private:
+        int sockFD;
+        std::string clientIP;
     };
 } //namespace runtofuServer
 
