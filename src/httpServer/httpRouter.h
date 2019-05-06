@@ -46,7 +46,7 @@ namespace runtofuServer{
         void addRouter(ROUTER_TYPE t, const std::string &c, httpFunc f, const std::string &extParam);
 
         //匹配路由规则，如果有参数的话一起返回
-        const routerItem *matchRouter(const std::string &uri, std::map <std::string, std::string> &args);
+        const routerItem *matchRouter(const std::string &uri, std::map <std::string, std::string> &args) const;
 
     private:
         /**

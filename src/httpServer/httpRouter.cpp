@@ -33,7 +33,7 @@ namespace runtofuServer{
     }
 
     //匹配路由规则
-    const routerItem *httpRouter::matchRouter(const string &uri, map <string, string> &args){
+    const routerItem *httpRouter::matchRouter(const string &uri, map <string, string> &args) const{
         string tmpUri = uri;
         StrUtils::trimChar(tmpUri, '/');
         vector< routerItem * >::const_iterator iter;
