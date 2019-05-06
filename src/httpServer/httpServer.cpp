@@ -115,7 +115,7 @@ namespace runtofuServer{
                             char *clientIP = inet_ntoa(cliaddr.sin_addr);
                             cout << "accept:" << connfd << ",errno:" << errno << ",connect:" << clientIP << ":" << ntohs(cliaddr.sin_port) << endl;
                             if (this->threadManager.get() != NULL){
-                                boost::shared_ptr <Runnable> task = boost::shared_ptr< Runnable >(new httpTask(connfd, clientIP));
+                                boost::shared_ptr <Runnable> task = boost::shared_ptr< Runnable >(new httpTask(connfd, clientIP, this->routers));
                                 this->threadManager->add(task);
                             }
                         }
