@@ -5,6 +5,7 @@
  ************************************************************************/
 #include<iostream>
 #include "httpServer.h"
+#include "../utils/byte_buffer.h"
 
 using namespace std;
 using namespace apache::thrift;
@@ -28,12 +29,11 @@ namespace runtofuServer{
     };
 
     void httpTask::run(){
+        ByteBuffer bbfu;
         cout << "start task:" << sockFD << endl;
         char buf[MAX_SOCK_BUF_SIZE];
         //读到的字节数
-        int nread;
-        char output[1024] = {0};
-        sprintf(output, "sockFD=%d", sockFD);
+        int nread;ss
         do{
             bzero(buf, MAX_SOCK_BUF_SIZE);
             nread = read(this->sockFD, buf, MAX_SOCK_BUF_SIZE);
@@ -41,6 +41,7 @@ namespace runtofuServer{
             //读到数据
             if (nread > 0){
                 cout << "read:" << nread << "\t" << buf << ",errno:" << errno << endl;
+                bbfu.append(buf, nread);
                 //此处的数据读取方式较为暴力，假设所有的数据一次性到达
                 if (nread < MAX_SOCK_BUF_SIZE){
                     break;
@@ -70,7 +71,18 @@ namespace runtofuServer{
                 break;
             }
         }while (true);
-        write(this->sockFD, output, strlen(output));
+
+        //解析请求
+        httpRequest httpReq;
+        httpReq.parseBody(bbfu.rawData(), bbfu.size());
+        httpReq.printReq();
+
+        string rspStr;
+        httpResponse httpRsp;
+        httpRsp.setBody("{\"q\":\"http s\",\"p\":false,\"g\":[{\"type\":\"sug\",\"sa\":\"s_1\",\"q\":\"http status 500\"},{\"type\":\"sug\",\"sa\":\"s_2\",\"q\":\"http status 400\"},{\"type\":\"sug\",\"sa\":\"s_3\",\"q\":\"http socket\"},{\"type\":\"sug\",\"sa\":\"s_4\",\"q\":\"http session\"},{\"type\":\"sug\",\"sa\":\"s_5\",\"q\":\"httpstatus404解决步骤\"},{\"type\":\"sug\",\"sa\":\"s_6\",\"q\":\"http status\"},{\"type\":\"sug\",\"sa\":\"s_7\",\"q\":\"http stat jseea\"},{\"type\":\"sug\",\"sa\":\"s_8\",\"q\":\"http socket tcp区别\"},{\"type\":\"sug\",\"sa\":\"s_9\",\"q\":\"http status 404-not found\"},{\"type\":\"sug\",\"sa\":\"s_10\",\"q\":\"http status 500解决\"}]}");
+        httpRsp.renderJson(rspStr);
+
+        write(this->sockFD, rspStr.c_data(), rspStr.size());
         close(this->sockFD);
         cout << "end task:" << sockFD << endl;
     }
