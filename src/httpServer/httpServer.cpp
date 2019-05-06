@@ -22,8 +22,6 @@ namespace runtofuServer{
 
         void run();
 
-        void readD();
-
     private:
         int sockFD;
     };
@@ -42,6 +40,7 @@ namespace runtofuServer{
             //读到数据
             if (nread > 0){
                 cout << "read:" << nread << "\t" << buf << ",errno:" << errno << endl;
+                //此处的数据读取方式较为暴力，假设所有的数据一次性到达
                 if (nread < MAX_SOCK_BUF_SIZE){
                     break;
                 }
