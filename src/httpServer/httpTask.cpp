@@ -67,8 +67,10 @@ namespace runtofuServer{
         httpResponse httpRsp;
         string rspStr;
 
+        const routerItem *r = NULL;
+
         map <string, string> args;
-        const routerItem *r = this->routers.matchRouter(httpReq.uri, args);
+        r = this->routers.matchRouter(httpReq.uri, args);
         if (r == NULL){
             httpRsp.setStatus(httpStatus::NOT_FOUND);
             httpRsp.renderHTML(rspStr);
