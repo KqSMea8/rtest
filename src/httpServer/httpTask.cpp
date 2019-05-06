@@ -89,6 +89,7 @@ namespace runtofuServer{
         write(this->sockFD, rspStr.c_str(), rspStr.size());
         close(this->sockFD);
         httpReq.printReq();
+        r->func();
         cout << "end task:" << sockFD << endl;
     }
 
