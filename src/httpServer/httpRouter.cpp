@@ -65,7 +65,7 @@ namespace runtofuServer{
      *          /ggtest/abc
      *          /ggtest/44444
      **/
-    bool httpRouter::matchPathInfoRouter(const string &uri, const routerItem *router, map <string, string> &args){
+    bool httpRouter::matchPathInfoRouter(const string &uri, const routerItem *router, map <string, string> &args) const{
         if (router->config.find(":") == string::npos && router->config == uri){
             return true;
         }
@@ -110,7 +110,7 @@ namespace runtofuServer{
      * config 为 `^ggtest/aid(\w+?)/cid(\d+)$`，Param 为 aid=$1&cid=$2
      * 则将请求中aid后面的字符串挑出来赋给aid，cid后面的字符串挑出来赋给cid
      */
-    bool httpRouter::matchRegexpRouter(const string &uri, const routerItem *router, map <string, string> &args){
+    bool httpRouter::matchRegexpRouter(const string &uri, const routerItem *router, map <string, string> &args) const{
         map <string, string> tmpArgs;
         RegExp reg(router->config);
         if (reg.reg_match(uri) != 0){
