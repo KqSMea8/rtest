@@ -1,16 +1,13 @@
 /*************************************************************************
- * File:	snowflake.cpp
+ * File:	chatClient.cpp
  * Author:	liuyongshuai<liuyongshuai@hotmail.com>
- * Time:	2019年03月23日 星期六 18时13分32秒
+ * Time:	2019-05-07 16:56
  ************************************************************************/
-
 #include<iostream>
-#include "snowflake.h"
+#include "chatClient.h"
 
 using namespace std;
 
-namespace runtofuServer{
+namespace rtest{
 
-
-
-} //namespacecpputils
+} //namespace rtest

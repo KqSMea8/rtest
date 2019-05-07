@@ -11,7 +11,7 @@
 
 using namespace std;
 
-namespace runtofuServer {
+namespace rtest {
     //颜色用的方法
     typedef void (*ColorFunc)(const string &, int, int, string &);
 

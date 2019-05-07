@@ -20,7 +20,7 @@
 
 using namespace std;
 
-namespace runtofuServer{
+namespace rtest{
     static pthread_mutex_t mutex = PTHREAD_MUTEX_INITIALIZER;
     static bool isInitGlobalCurl = false;
 

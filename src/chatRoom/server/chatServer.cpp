@@ -1,15 +1,13 @@
 /*************************************************************************
- * File:	mysql_client.cpp
+ * File:	chatServer.cpp
  * Author:	liuyongshuai<liuyongshuai@hotmail.com>
- * Time:	2019年03月23日 星期六 18时08分24秒
+ * Time:	2019-05-07 16:56
  ************************************************************************/
-
 #include<iostream>
-#include "mysql_client.h"
+#include "chatServer.h"
+
 using namespace std;
 
 namespace rtest{
 
-
-
-} //namespacecpputils
+} //namespace rtest

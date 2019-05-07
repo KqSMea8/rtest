@@ -62,7 +62,7 @@ void printMap1(const std::map <string, string> &output){
 int main(){
     string s = "C/C++语言提供了几个标准库函数，可以将字符串转换为任意类型(整型、长整型、浮点型等)。";
     vector <int32_t> unicodes;
-    runtofuServer::StrUtils::utf8ToUnicode(s, unicodes);
+    rtest::StrUtils::utf8ToUnicode(s, unicodes);
     vector< int32_t >::iterator iter;
 
     for (iter = unicodes.begin(); iter != unicodes.end(); iter++){
@@ -72,20 +72,20 @@ int main(){
 
     //再转回来
     string str;
-    runtofuServer::StrUtils::unicodesToUTF8(unicodes, str);
+    rtest::StrUtils::unicodesToUTF8(unicodes, str);
     cout << str << endl;
 
     //计算md5
     char buf[33] = {0};
-    runtofuServer::MD5 md5;
+    rtest::MD5 md5;
     md5.MD5Str(s.c_str(), s.size(), buf, 33);
     cout << buf << endl;
 
     string rawStr = "各地区、各部门要抓紧做好本地区、本领域的劳动节假期调整落实工作，采取有效措施，保障交通运力，加强旅游服务，丰富产品供给，强化综合调控，确保平稳运行。";
     string b64en;
     string b64de;
-    runtofuServer::StrUtils::base64Encode(rawStr, b64en);
-    runtofuServer::StrUtils::base64Decode(b64en, b64de);
+    rtest::StrUtils::base64Encode(rawStr, b64en);
+    rtest::StrUtils::base64Decode(b64en, b64de);
     cout << rawStr << endl;
     cout << b64en << endl;
     cout << b64de << endl;
@@ -93,80 +93,80 @@ int main(){
     string rawUrl = "http://wiki.intra.xiaojukeji.com/pages/viewpage.action?pageId=114204118#id-4.计价&收银服务-术语说明";
     string urlEn;
     string urlDe;
-    runtofuServer::StrUtils::urlEncode(rawUrl, urlEn);
-    runtofuServer::StrUtils::urlDecode(urlEn, urlDe);
+    rtest::StrUtils::urlEncode(rawUrl, urlEn);
+    rtest::StrUtils::urlDecode(urlEn, urlDe);
     cout << rawUrl << endl;
     cout << urlEn << endl;
     cout << urlDe << endl;
 
     string out1;
     string out2;
-    runtofuServer::Color::Green(rawStr, 1, 1, out1);
-    runtofuServer::Color::Yellow(rawStr, 0, 0, out2);
+    rtest::Color::Green(rawStr, 1, 1, out1);
+    rtest::Color::Yellow(rawStr, 0, 0, out2);
     cout << out1 << endl;
     cout << out2 << endl;
 
     size_t screenWidth, screenHeight;
-    runtofuServer::SomeUtils::getTerminalSize(&screenWidth, &screenHeight);
+    rtest::SomeUtils::getTerminalSize(&screenWidth, &screenHeight);
     cout << screenWidth << "\t" << screenHeight << endl;
 
     string trimSp1 = "  c\n\t   ";
-    runtofuServer::StrUtils::trimSpace(trimSp1);
+    rtest::StrUtils::trimSpace(trimSp1);
     cout << "trimSp=" << trimSp1 << "\tsize=" << trimSp1.size() << endl;
     string trimSp2 = "  c\n\t   ";
-    runtofuServer::StrUtils::trimLeftSpace(trimSp2);
+    rtest::StrUtils::trimLeftSpace(trimSp2);
     cout << "trimSp2=" << trimSp2 << "\tsize=" << trimSp2.size() << endl;
     string trimSp3 = "  c\n\t   ";
-    runtofuServer::StrUtils::trimRightSpace(trimSp3);
+    rtest::StrUtils::trimRightSpace(trimSp3);
     cout << "trimSp3=" << trimSp3 << "\tsize=" << trimSp3.size() << endl;
 
     string trimCH1 = "abcaaaaaaa";
-    runtofuServer::StrUtils::trimChar(trimCH1, 'a');
+    rtest::StrUtils::trimChar(trimCH1, 'a');
     cout << "trimCH1=" << trimCH1 << "\tsize=" << trimCH1.size() << endl;
 
-    runtofuServer::RegExp reg1(";");
+    rtest::RegExp reg1(";");
     string ck = "a=c;d=f;a=adsfadfadfadfadfadf;d=453453453534;;;;;;;;-";
     vector <string> reg1SubList;
     reg1.reg_split(ck, reg1SubList);
     printVector1(reg1SubList);
 
-    cout << "-------runtofuServer::StrUtils::strSplit-------" << endl;
+    cout << "-------rtest::StrUtils::strSplit-------" << endl;
     vector <string> split2SubList;
-    runtofuServer::StrUtils::strSplit(ck, ';', split2SubList);
+    rtest::StrUtils::strSplit(ck, ';', split2SubList);
     printVector1(split2SubList);
     cout << endl;
 
-    cout << "-------runtofuServer::HttpClientUtils::splitRawCookie-------" << endl;
+    cout << "-------rtest::HttpClientUtils::splitRawCookie-------" << endl;
     map <string, string> cookie2SubList;
-    runtofuServer::HttpClientUtils::splitRawCookie(ck, cookie2SubList);
+    rtest::HttpClientUtils::splitRawCookie(ck, cookie2SubList);
     printMap1(cookie2SubList);
     string ck1;
-    runtofuServer::HttpClientUtils::joinRawCookie(cookie2SubList, ck1);
+    rtest::HttpClientUtils::joinRawCookie(cookie2SubList, ck1);
     cout << ck1 << endl;
     cout << endl;
 
     cout << "---------/dev/urandom---------" << endl;
     string deviceRandom1;
-    runtofuServer::SomeUtils::getDeviceRandom(deviceRandom1, 30);
+    rtest::SomeUtils::getDeviceRandom(deviceRandom1, 30);
     cout << deviceRandom1 << endl;
     cout << endl;
 
     cout << "---------local ip---------" << endl;
     vector <uint32_t> ipList;
-    runtofuServer::SomeUtils::getLocalIP(ipList);
+    rtest::SomeUtils::getLocalIP(ipList);
     cout << endl;
 
     cout << "---------clock---------" << endl;
     uint64_t ms, ns;
-    runtofuServer::SomeUtils::getMicroSeconds(ms);
-    runtofuServer::SomeUtils::getNanoSeconds(ns);
+    rtest::SomeUtils::getMicroSeconds(ms);
+    rtest::SomeUtils::getNanoSeconds(ns);
     cout << "ms=" << ms << "\tns=" << ns << endl;
     cout << endl;
 
     cout << "---------random---------" << endl;
     int i;
     for (i = 0; i < 10; i++){
-        int r = runtofuServer::SomeUtils::getRandom();
+        int r = rtest::SomeUtils::getRandom();
         cout << "random int=" << r << endl;
     }
     cout << endl;
@@ -174,12 +174,12 @@ int main(){
     cout << "---------userAgent---------" << endl;
     string ua;
     for (i = 0; i < 10; i++){
-        runtofuServer::HttpClientUtils::genRandomPCUserAgent(ua);
+        rtest::HttpClientUtils::genRandomPCUserAgent(ua);
         cout << "PC-User-Agent=" << ua << endl;
         ua.clear();
     }
     for (i = 0; i < 10; i++){
-        runtofuServer::HttpClientUtils::genRandomMobileUserAgent(ua);
+        rtest::HttpClientUtils::genRandomMobileUserAgent(ua);
         cout << "Mobile-User-Agent=" << ua << endl;
         ua.clear();
     }
@@ -195,22 +195,22 @@ int main(){
     size_t fsLen = sizeof(fs) / sizeof(char *);
     for (i = 0; i < fsLen; i++){
         const char *f = fs[i];
-        bool r = runtofuServer::SomeUtils::isFileExist(f);
+        bool r = rtest::SomeUtils::isFileExist(f);
         cout << "file[" << f << "] isExist:" << r << endl;
         string bname;
-        runtofuServer::SomeUtils::fileBaseName(f, bname);
+        rtest::SomeUtils::fileBaseName(f, bname);
         cout << "file[" << f << "] basename:" << bname << endl;
     }
     cout << endl;
 
     cout << "---------fileSize & getContent---------" << endl;
     string tmpFilePath = "/Users/liuyongshuai/Documents/service.conf";
-    if (runtofuServer::SomeUtils::isFileExist(tmpFilePath)){
-        size_t fileSize = runtofuServer::SomeUtils::fileSize(tmpFilePath);
+    if (rtest::SomeUtils::isFileExist(tmpFilePath)){
+        size_t fileSize = rtest::SomeUtils::fileSize(tmpFilePath);
         cout << "fileSize=" << fileSize << endl;
         char *tmpFileBuf = (char *) malloc(sizeof(char) * fileSize + 1);
         bzero(tmpFileBuf, sizeof(char) * fileSize + 1);
-        runtofuServer::SomeUtils::getFileContent(tmpFilePath, tmpFileBuf);
+        rtest::SomeUtils::getFileContent(tmpFilePath, tmpFileBuf);
         cout << "getFileContent=" << endl;
     }
 
@@ -218,7 +218,7 @@ int main(){
     //cout << tmpFileBuf << endl;
 
     cout << "---------byte_buffer---------" << endl;
-    runtofuServer::ByteBuffer bb;
+    rtest::ByteBuffer bb;
     bb.appendInt(12345);
     //bb++;
     cout << "int64_t=" << bb.toInt64() << endl;
@@ -231,16 +231,16 @@ int main(){
 
 
     cout << "---------httpRequest---------" << endl;
-    cout << "httpRequest::GET=" << runtofuServer::httpRequest::GET << endl;
-    cout << "httpRequest::POST=" << runtofuServer::httpRequest::POST << endl;
-    cout << "httpRequest::PUT=" << runtofuServer::httpRequest::PUT << endl;
-    cout << "httpRequest::HEAD=" << runtofuServer::httpRequest::HEAD << endl;
-    cout << "httpRequest::DELETE=" << runtofuServer::httpRequest::DELETE << endl;
+    cout << "httpRequest::GET=" << rtest::httpRequest::GET << endl;
+    cout << "httpRequest::POST=" << rtest::httpRequest::POST << endl;
+    cout << "httpRequest::PUT=" << rtest::httpRequest::PUT << endl;
+    cout << "httpRequest::HEAD=" << rtest::httpRequest::HEAD << endl;
+    cout << "httpRequest::DELETE=" << rtest::httpRequest::DELETE << endl;
     cout << endl;
 
     cout << "---------isAllNumber---------" << endl;
-    cout << runtofuServer::SomeUtils::isAllNumber("444444444") << endl;
-    cout << runtofuServer::SomeUtils::isAllNumber("444444f444") << endl;
-    cout << runtofuServer::SomeUtils::isAllNumber("0") << endl;
-    cout << runtofuServer::SomeUtils::isAllNumber("") << endl;
+    cout << rtest::SomeUtils::isAllNumber("444444444") << endl;
+    cout << rtest::SomeUtils::isAllNumber("444444f444") << endl;
+    cout << rtest::SomeUtils::isAllNumber("0") << endl;
+    cout << rtest::SomeUtils::isAllNumber("") << endl;
 };

@@ -14,7 +14,7 @@
 #include <stddef.h>
 
 using namespace std;
-namespace runtofuServer{
+namespace rtest{
     class StrUtils{
     private:
         StrUtils(){};

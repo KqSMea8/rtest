@@ -14,7 +14,7 @@
 
 using namespace std;
 
-namespace runtofuServer{
+namespace rtest{
     //整个表格
     class TerminalTable{
 

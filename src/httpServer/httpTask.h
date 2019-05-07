@@ -18,7 +18,7 @@
 
 #define MAX_SOCK_BUF_SIZE 8192
 
-namespace runtofuServer{
+namespace rtest{
     class httpTask : public apache::thrift::concurrency::Runnable{
     public:
         httpTask(int fd, std::string cip, const httpRouter &r) : sockFD(fd), clientIP(cip), routers(r){}
@@ -32,7 +32,7 @@ namespace runtofuServer{
         std::string clientIP;
         const httpRouter &routers;
     };
-} //namespace runtofuServer
+} //namespace rtest
 
 
 #endif //_RUNTOFUSERVER_HTTPTASK_H_201905061307_

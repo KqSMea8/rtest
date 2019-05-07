@@ -15,7 +15,7 @@
 
 using namespace std;
 
-namespace runtofuServer{
+namespace rtest{
     httpRequest::httpRequest(){
         this->rawBody = NULL;
         this->rawBodyLen = 0;
@@ -378,4 +378,4 @@ namespace runtofuServer{
             cout << "fileName=" << fileIter->second.fileName << "\tfileLen=" << fileIter->second.fileLen << endl;
         }
     }
-} //namespace runtofuServer
+} //namespace rtest

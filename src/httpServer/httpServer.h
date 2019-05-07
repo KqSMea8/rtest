@@ -43,7 +43,7 @@
 #define MAX_EVENTS 1024
 #define LISTEN_BACKLOG_SIZE 8
 
-namespace runtofuServer{
+namespace rtest{
     class httpServer{
     public:
         httpServer(uint16_t port);
@@ -84,7 +84,7 @@ namespace runtofuServer{
         //重用
         void setReUseAddr(int sock);
     };
-} //namespace runtofuServer
+} //namespace rtest
 
 
 #endif //_CPPUTILS_HTTPSERVER_H_201904041437_

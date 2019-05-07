@@ -11,7 +11,7 @@
 
 using namespace std;
 
-namespace runtofuServer{
+namespace rtest{
     //添加一条路由信息
     void httpRouter::addRouter(const routerItem *r){
         this->addRouter(r->type, r->config, r->func, r->extParam);
@@ -166,4 +166,4 @@ namespace runtofuServer{
             delete *iter;
         }
     }
-} //namespace runtofuServer
+} //namespace rtest

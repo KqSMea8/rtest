@@ -19,7 +19,7 @@
 #define NORMAL_POST_CONTENT_TYPE "application/x-www-form-urlencoded"
 #define UPLOAD_POST_CONTENT_TYPE "multipart/form-data"
 
-namespace runtofuServer{
+namespace rtest{
     class httpRequest{
     private:
         //解析 multipart/form-data 请求的POST数据
@@ -100,7 +100,7 @@ namespace runtofuServer{
         //打印解析出来的请求信息
         void printReq();
     };
-} //namespace runtofuServer
+} //namespace rtest
 
 
 #endif //_CPPUTILS_HTTPREQUEST_H_201904041438_

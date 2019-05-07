@@ -8,7 +8,7 @@
 
 using namespace std;
 
-namespace runtofuServer{
+namespace rtest{
     map <uint32_t, string> httpStatus::statusMap;
 
     //获取各状态的描述信息
@@ -65,4 +65,4 @@ namespace runtofuServer{
             desc = iter->second;
         }
     }
-} //namespace runtofuServer
+} //namespace rtest

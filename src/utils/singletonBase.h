@@ -6,7 +6,7 @@
 #ifndef _RUNTOFUSERVER_SINGLETONBASE_H_201904191923_
 #define _RUNTOFUSERVER_SINGLETONBASE_H_201904191923_
 
-namespace runtofuServer{
+namespace rtest{
     class singletonBase{
     protected:
         singletonBase(){}
@@ -18,7 +18,7 @@ namespace runtofuServer{
 
         const singletonBase &operator=(const singletonBase &);
     };
-} //namespace runtofuServer
+} //namespace rtest
 
 
 #endif //_RUNTOFUSERVER_SINGLETONBASE_H_201904191923_

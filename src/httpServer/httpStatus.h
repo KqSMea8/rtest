@@ -11,7 +11,7 @@
 #include<stdint.h>
 #include<map>
 
-namespace runtofuServer{
+namespace rtest{
     class httpStatus{
     private:
         //状态对照表
@@ -64,7 +64,7 @@ namespace runtofuServer{
 
         static void statusDesc(HTTP_STATUS status, std::string &desc);
     };
-} //namespace runtofuServer
+} //namespace rtest
 
 
 #endif //_CPPUTILS_HTTPSTATUS_H_201904041734_

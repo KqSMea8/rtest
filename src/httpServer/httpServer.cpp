@@ -15,7 +15,7 @@ using apache::thrift::concurrency::Runnable;
 using apache::thrift::concurrency::ThreadManager;
 using apache::thrift::concurrency::PosixThreadFactory;
 
-namespace runtofuServer{
+namespace rtest{
     httpServer::httpServer(uint16_t p) : port(p), listenFD(0), epollFD(0){
         this->threadManager = apache::thrift::concurrency::ThreadManager::newSimpleThreadManager(30);
         boost::shared_ptr <PosixThreadFactory> threadFactory = boost::shared_ptr< PosixThreadFactory >(new PosixThreadFactory());
@@ -168,4 +168,4 @@ namespace runtofuServer{
     httpServer::~httpServer(){
 
     }
-} //namespace runtofuServer
+} //namespace rtest

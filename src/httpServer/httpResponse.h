@@ -15,7 +15,7 @@
 #include "../client/http/http_client_utils.h"
 #include "httpRequest.h"
 
-namespace runtofuServer{
+namespace rtest{
     class httpResponse{
     private:
         httpStatus::HTTP_STATUS status;
@@ -59,7 +59,7 @@ namespace runtofuServer{
         //返回json信息
         void renderJson(std::string &rsp);
     };
-} //namespace runtofuServer
+} //namespace rtest
 
 
 #endif //_CPPUTILS_HTTPRESPONSE_H_201904041439_

@@ -18,7 +18,7 @@ void genCurData(uint32_t maxAgeTime, string &d){
     d = expire_time;
 }
 
-namespace runtofuServer{
+namespace rtest{
     //初始化一些头信息
     httpResponse::httpResponse(){
         this->setHeader("Referrer-Policy", "origin-when-cross-origin");
@@ -153,4 +153,4 @@ namespace runtofuServer{
         rsp += "\r\n";
         rsp += body;
     }
-} //namespace runtofuServer
+} //namespace rtest

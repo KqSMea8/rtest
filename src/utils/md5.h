@@ -11,7 +11,7 @@
 #include <stdint.h>
 #include <stddef.h>
 
-namespace runtofuServer {
+namespace rtest {
     class MD5 {
     private:
 

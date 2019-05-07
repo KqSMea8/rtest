@@ -17,19 +17,19 @@
 
 using namespace std;
 
-void httpIndex(runtofuServer::httpRequest &req, runtofuServer::httpResponse &rsp){
+void httpIndex(rtest::httpRequest &req, rtest::httpResponse &rsp){
     cout << "httpIndex" << endl;
 }
 
-void httpFunc1(runtofuServer::httpRequest &req, runtofuServer::httpResponse &rsp){
+void httpFunc1(rtest::httpRequest &req, rtest::httpResponse &rsp){
     cout << "httpFunc1" << endl;
 }
 
-void httpFunc2(runtofuServer::httpRequest &req, runtofuServer::httpResponse &rsp){
+void httpFunc2(rtest::httpRequest &req, rtest::httpResponse &rsp){
     cout << "httpFunc2" << endl;
 }
 
-void httpFunc3(runtofuServer::httpRequest &req, runtofuServer::httpResponse &rsp){
+void httpFunc3(rtest::httpRequest &req, rtest::httpResponse &rsp){
     cout << "httpFunc3" << endl;
 }
 
@@ -43,11 +43,11 @@ void printArgs(map <string, string> &args){
 }
 
 int main(){
-    runtofuServer::httpServer svr(5000);
-    svr.routers.addRouter(runtofuServer::ROUTER_TYPE_PATH_INFO, "", httpIndex, "");
-    svr.routers.addRouter(runtofuServer::ROUTER_TYPE_PATH_INFO, "article/:aid", httpFunc1, "");
-    svr.routers.addRouter(runtofuServer::ROUTER_TYPE_PATH_INFO, "article/:aid/comment/:cid", httpFunc2, "");
-    svr.routers.addRouter(runtofuServer::ROUTER_TYPE_REGEXP, "article/(comment|mark)", httpFunc3, "t=$1");
+    rtest::httpServer svr(5000);
+    svr.routers.addRouter(rtest::ROUTER_TYPE_PATH_INFO, "", httpIndex, "");
+    svr.routers.addRouter(rtest::ROUTER_TYPE_PATH_INFO, "article/:aid", httpFunc1, "");
+    svr.routers.addRouter(rtest::ROUTER_TYPE_PATH_INFO, "article/:aid/comment/:cid", httpFunc2, "");
+    svr.routers.addRouter(rtest::ROUTER_TYPE_REGEXP, "article/(comment|mark)", httpFunc3, "t=$1");
     svr.start();
     return 0;
 }

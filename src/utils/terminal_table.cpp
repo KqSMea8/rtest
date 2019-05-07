@@ -13,7 +13,7 @@
 
 using namespace std;
 
-namespace runtofuServer {
+namespace rtest {
     static const char *replaceStr[] = {
             "“", "\"",
             "”", "\"",

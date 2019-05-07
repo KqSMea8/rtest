@@ -11,7 +11,7 @@
 
 using namespace std;
 
-namespace runtofuServer{
+namespace rtest{
     ByteBuffer::ByteBuffer(){
         curPos = 0;
         totalCapacity = 0;

@@ -21,7 +21,7 @@ using namespace std;
 //每次增长的总大小
 #define BYTE_BUFFER_INCREMENT_SIZE 256
 
-namespace runtofuServer{
+namespace rtest{
     class ByteBuffer{
     private:
         uint8_t *data; //数据位置

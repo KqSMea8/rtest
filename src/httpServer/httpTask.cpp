@@ -13,7 +13,7 @@ using apache::thrift::concurrency::Runnable;
 using apache::thrift::concurrency::ThreadManager;
 using apache::thrift::concurrency::PosixThreadFactory;
 
-namespace runtofuServer{
+namespace rtest{
 
     void httpTask::run(){
         ByteBuffer bbfu;
@@ -93,4 +93,4 @@ namespace runtofuServer{
         cout << "end task:" << sockFD << endl;
     }
 
-} //namespace runtofuServer
+} //namespace rtest

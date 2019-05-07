@@ -18,7 +18,7 @@
 #include "../../utils/byte_buffer.h"
 
 using namespace std;
-namespace runtofuServer{
+namespace rtest{
 
     class MySQLClient{
     public:

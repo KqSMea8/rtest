@@ -12,7 +12,7 @@
 #include<stdint.h>
 #include<stdarg.h>
 
-namespace runtofuServer {
+namespace rtest {
     class RuneUtils {
     private:
         RuneUtils() {};

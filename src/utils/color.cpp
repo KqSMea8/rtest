@@ -13,7 +13,7 @@
 #include "color.h"
 
 using namespace std;
-namespace runtofuServer {
+namespace rtest {
 
     void Color::Green(const string &inStr, int blink, int underline, string &outStr) {
         cliColorRender(inStr, COLOR_GREEN, 0, blink, underline, outStr);

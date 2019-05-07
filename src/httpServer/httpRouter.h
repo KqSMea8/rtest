@@ -12,7 +12,7 @@
 #include "httpRequest.h"
 #include "httpResponse.h"
 
-namespace runtofuServer{
+namespace rtest{
 
     //要执行的方法
     typedef void (*httpFunc)(httpRequest &req, httpResponse &rsp);
@@ -71,7 +71,7 @@ namespace runtofuServer{
          */
         bool matchRegexpRouter(const std::string &uri, const routerItem *router, std::map <std::string, std::string> &args) const;
     };
-} //namespace runtofuServer
+} //namespace rtest
 
 
 #endif //_RUNTOFUSERVER_HTTPROUTER_H_201904261820_
