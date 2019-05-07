@@ -21,8 +21,7 @@ utils_objs=${UTILS_DIR}/strutils.o \
            ${UTILS_DIR}/color.o \
            ${UTILS_DIR}/regexp.o \
            ${UTILS_DIR}/terminal_table.o \
-           ${UTILS_DIR}/byte_buffer.o \
-           ${UTILS_DIR}/snowflake.o
+           ${UTILS_DIR}/byte_buffer.o 
 
 client_objs=${CLIENT_DIR}/http/http_client_utils.o \
             ${CLIENT_DIR}/http/curl_handle.o
